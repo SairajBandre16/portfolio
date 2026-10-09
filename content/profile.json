@@ -1,0 +1,191 @@
+{
+  "name": "Sairaj Bandre",
+  "shortName": "Sairaj",
+  "initials": "SB",
+  "location": {
+    "city": "Dublin",
+    "country": "Ireland",
+    "lat": 53.35,
+    "lon": -6.26,
+    "timeZone": "Europe/Dublin"
+  },
+  "email": "sairajbandre16@gmail.com",
+  "links": {
+    "github": "https://github.com/SairajBandre16",
+    "linkedin": "https://www.linkedin.com/in/sairajbandre/",
+    "resume": "/Sairaj-Bandre-Resume.pdf"
+  },
+  "headline": {
+    "lead": "From automating warehouses",
+    "accent": "to building AI systems."
+  },
+  "roles": [
+    "aspiring AI engineer",
+    "building with Claude Code",
+    "ex-automation engineer",
+    "MSc Computer Science at UCD"
+  ],
+  "pitch": "I spent a year building the automation behind real e-commerce operations. Now I'm in Dublin doing an MSc and turning that into AI engineering, shipping one project at a time with Claude Code as my pair-programmer.",
+  "summary": "AI-focused Computer Science postgraduate (B.E. in Artificial Intelligence & Data Science) with hands-on experience building AI agent workflows, automation and data pipelines in production, plus deep learning, computer vision and NLP projects. Two published research papers.",
+  "seeking": ["AI Engineer", "Applied AI Engineer", "ML Engineer", "Data Scientist"],
+  "now": {
+    "building": "QueryForge",
+    "buildingHref": "/projects/queryforge",
+    "learning": "RAG and NLP (UCD Text Analytics)"
+  },
+  "about": {
+    "story": [
+      "I started out at Ergode, an e-commerce company, first as an AI intern and then running supply-chain automation. The work was practical: orders flowing through Walmart DSV and Shein portals, Amazon Seller Central workflows the API didn't cover, reports nobody wanted to build by hand. I built the bots, pipelines and n8n agent workflows that did it instead.",
+      "That job taught me the part of AI that demos skip: data is messy, systems break in ways nobody planned for, and a tool only counts if people actually use it. I moved to Dublin for an MSc in Computer Science at UCD to go deeper on the models themselves.",
+      "Now I'm building towards an AI engineering role in public: text-to-SQL agents, supply-chain risk models, evaluation harnesses. Every project ships on GitHub with honest numbers, including the ones that didn't work."
+    ],
+    "aside": "Off the keyboard I'm usually looking up. I'm a plane-spotter with Flightradar open far more than I'd like to admit, which is how a 3D plane-tracking app ended up in this portfolio.",
+    "loop": [
+      {
+        "step": "Learn",
+        "body": "Pick one concept I can't explain yet: schema linking, SHAP, tool-calling loops."
+      },
+      {
+        "step": "Build",
+        "body": "Build something real with it, with Claude Code as pair-programmer and me owning the decisions."
+      },
+      {
+        "step": "Ship",
+        "body": "Push it to GitHub with tests, a write-up and the numbers, good or bad."
+      }
+    ]
+  },
+  "experience": [
+    {
+      "role": "Executive, Supply Chain Management & Automation Operations",
+      "org": "Ergode",
+      "place": "India",
+      "start": "Jan 2026",
+      "end": "Jul 2026",
+      "points": [
+        "Built and owned live automation systems processing high-volume orders across multiple seller portals (Walmart DSV, Shein), improving accuracy, throughput and reliability.",
+        "Developed automated data pipelines and SQL reporting tools that turned operational data into actionable insight on shipping variance and shipper performance.",
+        "Solved a hard integration gap by building RPA-driven automation for Amazon Seller Central workflows not covered by the SP-API, removing manual handling of high-volume processes.",
+        "Debugged, optimised and scaled automation systems with cross-functional teams, quickly learning unfamiliar codebases to improve reliability and performance."
+      ],
+      "tags": ["Python", "RPA", "SQL", "Data pipelines"]
+    },
+    {
+      "role": "AI Intern",
+      "org": "Ergode",
+      "place": "India",
+      "start": "Aug 2025",
+      "end": "Jan 2026",
+      "points": [
+        "Designed and deployed AI agent workflows using n8n to automate tasks across departments, turning stakeholder requirements into working, maintainable tools.",
+        "Built automated report generation from databases and Excel, delivering accurate, timely output to support data-driven decisions.",
+        "Implemented RPA tools to eliminate repetitive manual tasks, improving data quality and saving employee time."
+      ],
+      "tags": ["n8n", "LLM agents", "RPA", "Reporting"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "MSc Computer Science (Negotiated Learning)",
+      "org": "University College Dublin",
+      "place": "Dublin",
+      "start": "2026",
+      "end": "2027",
+      "note": "Current. Includes the Text Analytics module."
+    },
+    {
+      "degree": "B.E. Artificial Intelligence & Data Science",
+      "org": "SIES Graduate School of Technology",
+      "place": "Nerul",
+      "start": "2021",
+      "end": "2025",
+      "note": "Two published research papers from undergraduate projects."
+    }
+  ],
+  "publications": [
+    {
+      "title": "RainWise: Smart Rainwater Harvesting",
+      "venue": "International Conference on Computing, Communication, and Networking Technologies (ICCCNT)",
+      "year": 2025,
+      "summary": "A deep learning model trained on Indian weather data predicts rainfall and drives a mobile app that recommends rainwater storage solutions.",
+      "project": "https://github.com/SairajBandre16/RainWise",
+      "link": null
+    },
+    {
+      "title": "Scan To Measure",
+      "venue": "International Journal for Research Trends and Innovation (IJRTI)",
+      "year": 2023,
+      "summary": "Real-time object size measurement with OpenCV and ArUco markers, using an image-processing pipeline for detection and localisation.",
+      "project": "https://github.com/SairajBandre16/Scan-to-Measure",
+      "link": null
+    }
+  ],
+  "skills": [
+    {
+      "group": "AI / ML",
+      "items": ["LLM agents", "NLP", "Deep learning", "Computer vision", "PyTorch", "TensorFlow", "OpenCV", "LightGBM", "SHAP", "Ollama", "MCP"]
+    },
+    {
+      "group": "Automation",
+      "items": ["n8n", "RPA", "Selenium", "Business process automation", "API integration", "Backend automation"]
+    },
+    {
+      "group": "Data",
+      "items": ["SQL", "Data pipelines", "SQL reporting", "Data management", "pandas", "Evaluation harnesses"]
+    },
+    {
+      "group": "Languages & tools",
+      "items": ["Python", "Java", "TypeScript", "FastAPI", "Flask", "Streamlit", "Next.js", "React", "Flutter", "Three.js", "Docker", "Git", "Claude Code"]
+    }
+  ],
+  "roadmap": [
+    {
+      "title": "ML and deep learning foundations",
+      "where": "B.E. AI & Data Science, 2021–2025",
+      "status": "logged",
+      "proof": "RainWise rainfall model"
+    },
+    {
+      "title": "Computer vision and classic NLP",
+      "where": "Undergraduate projects and papers",
+      "status": "logged",
+      "proof": "Scan To Measure, News Summarizer"
+    },
+    {
+      "title": "Agent workflows in production",
+      "where": "Ergode, 2025–2026",
+      "status": "logged",
+      "proof": "n8n agents and RPA used every day"
+    },
+    {
+      "title": "Text-to-SQL and evaluation",
+      "where": "QueryForge on the Spider benchmark",
+      "status": "logged",
+      "proof": "70.8% execution accuracy on 1,034 questions"
+    },
+    {
+      "title": "Tool-using LLM agents",
+      "where": "ChainWatch and QueryForge MCP server",
+      "status": "enroute",
+      "proof": "Typed tools, guard rails, grounded briefs"
+    },
+    {
+      "title": "NLP and text analytics",
+      "where": "UCD MSc, Text Analytics module",
+      "status": "enroute",
+      "proof": "In progress this term"
+    },
+    {
+      "title": "RAG and vector databases",
+      "where": "Next project",
+      "status": "planned",
+      "proof": "Retrieval, chunking, eval"
+    },
+    {
+      "title": "Fine-tuning LLMs",
+      "where": "After RAG",
+      "status": "planned",
+      "proof": "Small open models, LoRA"
+    }
+  ]
+}
