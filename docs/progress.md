@@ -1,5 +1,9 @@
 # Progress
 
+## 2026-10-16: footer balance
+- Footer reads "Thanks for stopping by." with "Made by Sairaj Bandre." under it.
+- Skyline split exactly in half at the sun/moon: Mumbai on the left, Dublin on the right. Dublin gained a Georgian terrace with painted doors, Liberty Hall, Docklands offices and a taller Beckett Bridge and Poolbeg chimneys; Christ Church and the Four Courts moved forward. The Convention Centre and Aviva were dropped to keep it uncluttered.
+
 ## 2026-10-16: SQUAWK film, Mumbai + Dublin skyline, new logo
 - SQUAWK intro film and poster (from the SQUAWK repo's `assets/promo`) are in `public/projects/`. The poster is SQUAWK's screen everywhere; the film plays on hover in the gallery (nothing downloads until then) and with controls on the case study.
 - Footer now just says "Made by Sairaj Bandre." over a combined Mumbai and Dublin waterfront drawn as layered silhouettes, with day and night versions.

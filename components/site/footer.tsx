@@ -15,10 +15,13 @@ export function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden pt-20 sm:pt-28">
       <div className="gutter flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <p className="text-[clamp(2.5rem,1.2rem+4.2vw,5.5rem)] leading-[0.95] font-[600] tracking-[-0.032em] text-balance [font-stretch:90%]">
-          <span className="text-soft">{footer.signoff[0]}</span>{" "}
-          <span className="text-fg">{footer.signoff[1]}</span>
-        </p>
+        <div>
+          <p className="text-[clamp(2.5rem,1.2rem+4.2vw,5.5rem)] leading-[0.95] font-[600] tracking-[-0.032em] text-balance [font-stretch:90%]">
+            <span className="text-fg">{footer.thanks[0]}</span>{" "}
+            <span className="text-soft">{footer.thanks[1]}</span>
+          </p>
+          <p className="text-soft mt-4 text-lg">{footer.madeBy}</p>
+        </div>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {links.map((l) => (
             <li key={l.label}>

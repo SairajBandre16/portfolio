@@ -1,8 +1,10 @@
 // Mumbai and Dublin as one waterfront, the two cities Sairaj calls home.
-// Left to right: the Bandra-Worli Sea Link, Haji Ali Dargah, the Imperial Towers, the
-// Rajabai Clock Tower, Chhatrapati Shivaji Maharaj Terminus, the Taj Mahal Palace and the
-// Gateway of India; then the Ha'penny Bridge, the Spire, the Custom House, the Samuel
-// Beckett Bridge, the Convention Centre and the Poolbeg chimneys.
+// Half and half, meeting under the sun (or moon) in the middle. Mumbai, left: the
+// Bandra-Worli Sea Link, Haji Ali Dargah, the Imperial Towers, the Rajabai Clock Tower,
+// Chhatrapati Shivaji Maharaj Terminus, the Taj Mahal Palace and the Gateway of India.
+// Dublin, right: the Ha'penny Bridge, Christ Church, the Four Courts, a Georgian terrace,
+// the Spire, Liberty Hall, the Custom House, the Docklands, the Samuel Beckett Bridge and
+// the Poolbeg chimneys.
 // Drawn as layered silhouettes (far, mid, near) and mirrored in the water. In the dark
 // theme it is night: windows and the Sea Link light up, the moon and stars come out.
 // Colours and motion live in globals.css under "Footer skyline".
@@ -157,20 +159,16 @@ function Clouds() {
 /* ---------- Far layer ---------- */
 
 function MumbaiTowers() {
-  // [left, right, top, rounded crown]
+  // [left, right, top, rounded crown]; the round-topped pair are the Imperial Towers.
   const towers: [number, number, number, boolean?][] = [
-    [226, 252, 188],
-    [252, 276, 162],
-    [278, 298, 204],
-    [348, 372, 76, true],
-    [378, 402, 84, true],
-    [404, 430, 152],
-    [474, 498, 134],
-    [500, 520, 178],
-    [600, 624, 170],
-    [626, 650, 142],
-    [690, 712, 190],
-    [738, 760, 214],
+    [186, 210, 192],
+    [212, 236, 164],
+    [238, 256, 208],
+    [282, 306, 78, true],
+    [312, 336, 86, true],
+    [470, 490, 150],
+    [530, 548, 170],
+    [586, 604, 160],
   ];
   const panes: [number, number, number, number][] = [];
   for (const [x0, x1, top] of towers) panes.push(...grid(x0 + 4, x1 - 3, top + 12, G - 6, 6, 8, 3, 4));
@@ -193,26 +191,30 @@ function MumbaiTowers() {
 }
 
 function DublinBehind() {
-  // The Four Courts dome, Christ Church and a run of Georgian rooftops.
-  const roofs: [number, number, number][] = [
-    [816, 852, 252],
-    [852, 884, 244],
-    [912, 940, 250],
-    [1110, 1150, 252],
-    [1150, 1196, 246],
-    [1196, 1232, 254],
-  ];
+  // Christ Church, the Four Courts dome and the glass offices of the Docklands.
   const crenels: string[] = [];
-  for (let x = 942; x < 966; x += 6) crenels.push(R(x, 176, x + 3, 182));
+  for (let x = 727; x < 750; x += 6) crenels.push(R(x, 176, x + 3, 182));
+  const docks: [number, number, number][] = [
+    [1212, 1238, 204],
+    [1240, 1262, 184],
+    [1264, 1290, 212],
+    [1330, 1354, 196],
+    [1356, 1380, 220],
+  ];
   return (
     <g>
-      <path className="far" d={`${R(866, 222, 908, G)}${R(872, 206, 902, 222)}${dome(887, 17, 206, 170)}${R(885, 160, 889, 170)}`} />
-      {/* Christ Church: square tower with battlements and the nave running east. */}
-      <path className="far" d={`${R(940, 182, 966, G)}${crenels.join("")}M966 ${G}V214L990 196L1014 214V${G}Z`} />
-      <path className="far" d={roofs.map(([x0, x1, top]) => `${R(x0, top, x1, G)}${R(x0 + 6, top - 8, x0 + 12, top)}`).join("")} />
-      <Panes rects={roofs.flatMap(([x0, x1, top]) => grid(x0 + 5, x1 - 4, top + 8, G - 8, 9, 13, 4, 7))} seed={37} share={0.3} />
-      {/* The Aviva Stadium's curved bowl. */}
-      <path className="far" d={`M1236 ${G}V264C1262 240 1320 236 1352 258V${G}Z`} />
+      <path className="far" d={docks.map(([x0, x1, top]) => R(x0, top, x1, G)).join("")} />
+      <path
+        className="mid"
+        d={`${R(726, 182, 750, G)}${crenels.join("")}M750 ${G}V214L772 198L794 214V${G}Z${R(800, 224, 844, G)}${R(806, 208, 838, 224)}${dome(822, 17, 208, 172)}${R(820, 162, 824, 172)}`}
+      />
+      <path className="cut" d={`${arch(733, 743, 196, 214)}${arch(760, 768, 224, 250)}${arch(776, 784, 224, 250)}`} />
+      <Panes rects={grid(806, 840, 234, 262, 8, 16, 4, 9)} seed={47} share={0.45} shape="arch" />
+      <Panes
+        rects={docks.flatMap(([x0, x1, top]) => grid(x0 + 4, x1 - 3, top + 8, G - 6, 6, 8, 3, 4))}
+        seed={37}
+        share={0.35}
+      />
     </g>
   );
 }
@@ -222,25 +224,25 @@ function DublinBehind() {
 function SeaLink() {
   // Cable-stayed, with inverted-Y pylons and fans of cables.
   const deckTop = 262;
-  const pylons = [74, 214];
+  const pylons = [52, 170];
   const cables: string[] = [];
   const lights: P[] = [];
   for (const cx of pylons) {
     for (let k = 0; k < 10; k++) {
       const y = lerp(102, 178, k / 9);
-      const reach = lerp(122, 20, k / 9);
+      const reach = lerp(100, 18, k / 9);
       cables.push(`M${cx} ${r(y)}L${r(cx - reach)} ${deckTop}M${cx} ${r(y)}L${r(cx + reach)} ${deckTop}`);
     }
   }
-  for (let x = -16; x < 318; x += 11) lights.push([x, deckTop - 2.5]);
+  for (let x = -16; x < 262; x += 11) lights.push([x, deckTop - 2.5]);
   const pylon = (cx: number) =>
     `M${cx - 17} ${G}L${cx - 4} 192L${cx - 2.4} 92H${cx + 2.4}L${cx + 4} 192L${cx + 17} ${G}H${cx + 11}L${cx + 1} 210H${cx - 1}L${cx - 11} ${G}Z`;
   const piers: string[] = [];
-  for (let x = -6; x < 318; x += 32) if (pylons.every((p) => Math.abs(p - x) > 22)) piers.push(R(x, 268, x + 4, G));
+  for (let x = -6; x < 262; x += 32) if (pylons.every((p) => Math.abs(p - x) > 22)) piers.push(R(x, 268, x + 4, G));
   return (
     <g>
       <path d={cables.join("")} className="cable" />
-      <path className="mid" d={`${R(-20, deckTop, 320, deckTop + 6)}${piers.join("")}${pylons.map(pylon).join("")}`} />
+      <path className="mid" d={`${R(-20, deckTop, 264, deckTop + 6)}${piers.join("")}${pylons.map(pylon).join("")}`} />
       <g className="night">
         {lights.map(([x, y]) => (
           <circle key={x} cx={x} cy={y} r={1.2} className="glow" />
@@ -341,9 +343,9 @@ function Gateway() {
 /* ---------- Dublin ---------- */
 
 function HapennyBridge() {
-  const a: P = [814, G - 4];
-  const c: P = [880, G - 40];
-  const b: P = [946, G - 4];
+  const a: P = [730, G - 4];
+  const c: P = [796, G - 40];
+  const b: P = [862, G - 4];
   const posts: string[] = [];
   for (let i = 1; i < 26; i++) {
     const [x, y] = quad(a, c, b, i / 26);
@@ -351,8 +353,37 @@ function HapennyBridge() {
   }
   return (
     <g>
-      <path className="near" d={`M814 ${G}Q880 ${G - 32} 946 ${G}L${pt(b)}Q${pt(c)} ${pt(a)}Z`} />
-      <path className="rail" d={`${posts.join("")}M${a[0]} ${a[1] - 8}Q${c[0]} ${c[1] - 8} ${b[0]} ${b[1] - 8}`} />
+      <path className="near" d={`M730 ${G}Q796 ${G - 32} 862 ${G}L${pt(b)}Q${pt(c)} ${pt(a)}Z`} />
+      <path
+        className="rail"
+        d={`${posts.join("")}M${a[0]} ${a[1] - 8}Q${c[0]} ${c[1] - 8} ${b[0]} ${b[1] - 8}`}
+      />
+    </g>
+  );
+}
+
+function Terrace() {
+  // Georgian houses with chimney stacks and painted front doors under fanlights.
+  const houses: [number, number, number][] = [
+    [864, 886, 226],
+    [886, 908, 234],
+    [908, 930, 222],
+    [930, 950, 230],
+  ];
+  const doors = houses.map(([x0, x1]) => {
+    const m = (x0 + x1) / 2;
+    return `M${m - 3.5} ${G}V${G - 10}A3.5 3.5 0 0 1 ${m + 3.5} ${G - 10}V${G}Z`;
+  });
+  const panes = houses.flatMap(([x0, x1, top]) => grid(x0 + 4, x1 - 3, top + 9, G - 16, 8, 13, 4, 8));
+  return (
+    <g>
+      <path
+        className="near"
+        d={houses.map(([x0, x1, top]) => `${R(x0, top, x1, G)}${R(x0 + 3, top - 9, x0 + 9, top)}`).join("")}
+      />
+      <path className="cut-line" d={houses.map(([x0, x1, top]) => `M${x0} ${top + 4}H${x1}`).join("")} />
+      <Panes rects={panes} seed={41} share={0.55} />
+      <path className="paint" d={doors.join("")} />
     </g>
   );
 }
@@ -360,8 +391,17 @@ function HapennyBridge() {
 function Spire() {
   return (
     <g>
-      <path className="mid" d={`M957.4 ${G}L960.2 20L963 ${G}Z`} />
-      <circle cx={960.2} cy={26} r={1.4} className="night beacon" />
+      <path className="mid" d={`M953.2 ${G}L956 18L958.8 ${G}Z`} />
+      <circle cx={956} cy={24} r={1.4} className="night beacon" />
+    </g>
+  );
+}
+
+function LibertyHall() {
+  return (
+    <g>
+      <path className="mid" d={`${R(964, 136, 998, G)}M958 136Q969.5 124 981 136Q992.5 124 1004 136Z`} />
+      <Panes rects={grid(968, 995, 144, G - 6, 9, 9, 5, 5)} seed={43} share={0.45} />
     </g>
   );
 }
@@ -388,43 +428,31 @@ function CustomHouse() {
 
 function BeckettBridge() {
   // The harp: a curved spar leaning over the river, strung with cables.
-  const s0: P = [1228, G - 8];
-  const s1: P = [1236, 236];
-  const s2: P = [1252, 178];
-  const s3: P = [1284, 120];
-  const b1: P = [1262, 180];
-  const b2: P = [1248, 238];
-  const back: P = [1240, G - 8];
-  const deck = (x: number): P => quad([1176, G - 8], [1262, G - 18], [1348, G - 8], (x - 1176) / 172);
+  const s0: P = [1262, G - 8];
+  const s1: P = [1272, 228];
+  const s2: P = [1290, 160];
+  const s3: P = [1326, 94];
+  const b1: P = [1302, 162];
+  const b2: P = [1286, 230];
+  const back: P = [1276, G - 8];
+  const deck = (x: number): P =>
+    quad([1208, G - 8], [1300, G - 18], [1392, G - 8], (x - 1208) / 184);
   const strings: string[] = [];
-  for (let i = 0; i < 16; i++) {
-    const a = cubic(s0, s1, s2, s3, lerp(0.26, 0.97, i / 15));
-    strings.push(`M${pt(a)}L${pt(deck(lerp(1296, 1346, i / 15)))}`);
+  for (let i = 0; i < 18; i++) {
+    const a = cubic(s0, s1, s2, s3, lerp(0.24, 0.98, i / 17));
+    strings.push(`M${pt(a)}L${pt(deck(lerp(1334, 1390, i / 17)))}`);
   }
-  for (let i = 0; i < 6; i++) {
-    const a = cubic(s0, s1, s2, s3, lerp(0.6, 0.97, i / 5));
-    strings.push(`M${pt(a)}L${pt(deck(lerp(1180, 1214, i / 5)))}`);
+  for (let i = 0; i < 7; i++) {
+    const a = cubic(s0, s1, s2, s3, lerp(0.58, 0.98, i / 6));
+    strings.push(`M${pt(a)}L${pt(deck(lerp(1212, 1250, i / 6)))}`);
   }
   return (
     <g>
-      <path d={strings.join("")} className="cable" />
+      <path d={strings.join("")} className="cable cable-strong" />
       <path
-        className="mid"
-        d={`M1176 ${G - 8}Q1262 ${G - 18} 1348 ${G - 8}L1348 ${G - 3}Q1262 ${G - 13} 1176 ${G - 3}Z${R(1226, G - 6, 1242, G)}M${pt(s0)}C${pt(s1)} ${pt(s2)} ${pt(s3)}C${pt(b1)} ${pt(b2)} ${pt(back)}Z`}
+        className="near"
+        d={`M1208 ${G - 8}Q1300 ${G - 18} 1392 ${G - 8}L1392 ${G - 3}Q1300 ${G - 13} 1208 ${G - 3}Z${R(1260, G - 6, 1278, G)}M${pt(s0)}C${pt(s1)} ${pt(s2)} ${pt(s3)}C${pt(b1)} ${pt(b2)} ${pt(back)}Z`}
       />
-    </g>
-  );
-}
-
-function ConventionCentre() {
-  return (
-    <g>
-      <path className="mid" d={R(1314, 236, 1384, G)} />
-      <path className="cut-line" d={Array.from({ length: 7 }, (_, i) => `M${1322 + i * 9} 246V${G}`).join("")} />
-      <g transform="rotate(-24 1362 232)">
-        <ellipse cx={1362} cy={232} rx={20} ry={34} className="mid" />
-        <ellipse cx={1362} cy={232} rx={13} ry={25} className="glass" />
-      </g>
     </g>
   );
 }
@@ -433,50 +461,59 @@ function Poolbeg() {
   const chimney = (cx: number, top: number) => {
     const base = 11;
     const tip = 7;
-    const h = G - 22 - top;
+    const h = G - 24 - top;
     const half = (y: number) => lerp(tip, base, (y - top) / h);
     const bands: string[] = [];
     const step = (h * 0.85) / 7;
     for (let i = 0; i < 7; i += 2) {
       const y0 = top + i * step;
       const y1 = y0 + step;
-      bands.push(`M${pt([cx - half(y0), y0])}L${pt([cx + half(y0), y0])}L${pt([cx + half(y1), y1])}L${pt([cx - half(y1), y1])}Z`);
+      bands.push(
+        `M${pt([cx - half(y0), y0])}L${pt([cx + half(y0), y0])}L${pt([cx + half(y1), y1])}L${pt([cx - half(y1), y1])}Z`,
+      );
     }
     return {
-      body: `M${cx - base} ${G - 22}L${cx - tip} ${top}H${cx + tip}L${cx + base} ${G - 22}Z`,
+      body: `M${cx - base} ${G - 24}L${cx - tip} ${top}H${cx + tip}L${cx + base} ${G - 24}Z`,
       bands: bands.join(""),
     };
   };
-  const a = chimney(1402, 60);
-  const b = chimney(1429, 74);
+  const a = chimney(1406, 46);
+  const b = chimney(1431, 62);
   return (
     <g>
-      <path className="near" d={`${a.body}${b.body}${R(1378, G - 24, 1446, G)}`} />
+      <path className="near" d={`${a.body}${b.body}${R(1392, G - 26, 1446, G)}`} />
       <path className="paint" d={`${a.bands}${b.bands}`} />
-      <Panes rects={grid(1384, 1440, G - 16, G - 6, 8, 10, 4, 5)} seed={31} share={0.4} />
-      <circle cx={1402} cy={63} r={1.3} className="night beacon" />
-      <circle cx={1429} cy={77} r={1.3} className="night beacon" />
+      <Panes rects={grid(1396, 1440, G - 18, G - 6, 8, 10, 4, 5)} seed={31} share={0.4} />
+      <circle cx={1406} cy={49} r={1.3} className="night beacon" />
+      <circle cx={1431} cy={65} r={1.3} className="night beacon" />
     </g>
   );
 }
 
-/** Both cities, back to front. Mirrored again in the water. */
+/**
+ * Both cities, back to front, mirrored again in the water. Some landmarks are drawn where
+ * they were first designed and moved into place, so each keeps its own proportions.
+ */
 function City() {
+  const at = (dx: number, node: React.ReactNode) => (
+    <g transform={`translate(${dx} 0)`}>{node}</g>
+  );
   return (
     <g id="sk-city">
       <MumbaiTowers />
       <DublinBehind />
       <SeaLink />
-      <Rajabai />
-      <CSMT />
+      {at(-98, <Rajabai />)}
+      {at(-96, <CSMT />)}
       <Spire />
-      <BeckettBridge />
-      <ConventionCentre />
-      <HajiAli />
-      <Taj />
-      <Gateway />
+      <LibertyHall />
+      {at(-54, <HajiAli />)}
+      {at(-96, <Taj />)}
+      {at(-92, <Gateway />)}
       <HapennyBridge />
-      <CustomHouse />
+      <Terrace />
+      {at(16, <CustomHouse />)}
+      <BeckettBridge />
       <Poolbeg />
     </g>
   );
@@ -523,7 +560,7 @@ export function Skyline({ className }: { className?: string }) {
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="xMidYMax slice"
       role="img"
-      aria-label="Mumbai and Dublin as one waterfront: the Sea Link, Haji Ali, the Taj and the Gateway of India beside the Ha'penny Bridge, the Spire, the Custom House, the Samuel Beckett Bridge and the Poolbeg chimneys, mirrored in the water"
+      aria-label="Mumbai and Dublin side by side on one waterfront. Mumbai: the Sea Link, Haji Ali, the Rajabai Clock Tower, CSMT, the Taj and the Gateway of India. Dublin: the Ha'penny Bridge, a Georgian terrace, the Spire, Liberty Hall, the Custom House, the Samuel Beckett Bridge and the Poolbeg chimneys."
       className={`skyline block h-[clamp(15rem,32.6vw,40rem)] w-full ${className ?? ""}`}
     >
       <defs>

@@ -282,9 +282,9 @@ body {
   --window: #ffd08a;
 }
 [data-theme="dark"] .skyline {
-  --far: color-mix(in oklab, var(--fg) 6%, var(--bg));
-  --mid: color-mix(in oklab, var(--fg) 10%, var(--bg));
-  --near: color-mix(in oklab, var(--fg) 15%, var(--bg));
+  --far: color-mix(in oklab, var(--fg) 7%, var(--bg));
+  --mid: color-mix(in oklab, var(--fg) 12%, var(--bg));
+  --near: color-mix(in oklab, var(--fg) 18%, var(--bg));
   --cut: color-mix(in oklab, var(--fg) 3%, var(--bg));
 }
 .skyline .far {
@@ -325,6 +325,9 @@ body {
 .skyline .cable {
   stroke: var(--mid);
   stroke-width: 0.9;
+}
+.skyline .cable-strong {
+  stroke: var(--near);
 }
 .skyline .rail {
   stroke: var(--near);
