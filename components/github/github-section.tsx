@@ -1,133 +1,124 @@
 import { Suspense } from "react";
-import { ArrowUpRight, ExternalLink, Star } from "lucide-react";
-import { getRecentRepos, GITHUB_USER, languageColours } from "@/lib/github";
-import { Accent, SectionHeading } from "@/components/ui/section-heading";
+import { ArrowUpRight, Star } from "lucide-react";
+import { getRecentRepos, GITHUB_USER, languageColours, type Repo } from "@/lib/github";
+import { SectionLabel } from "@/components/ui/section-label";
 import { GitHubIcon } from "@/components/ui/icons";
-import { ClaudeCodeBadge } from "@/components/projects/status-pill";
+import { cn } from "@/lib/utils";
 import { RelativeTime } from "./relative-time";
 
-const cols = "md:grid-cols-[minmax(0,1.6fr)_8rem_4rem_9rem_5.5rem]";
+function RepoTile({ repo, latest }: { repo: Repo; latest: boolean }) {
+  const colour = repo.language
+    ? (languageColours[repo.language] ?? "var(--fg-subtle)")
+    : "var(--line-strong)";
+  return (
+    <li
+      className={cn(
+        "panel group hover:border-accent/60 relative flex flex-col rounded-[1.75rem] p-6 transition-[transform,border-color] duration-500 hover:-translate-y-1",
+        latest && "md:col-span-2 md:row-span-2 md:p-8",
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <span className="tag text-muted flex items-center gap-2">
+          <span className="size-2.5 rounded-full" style={{ background: colour }} aria-hidden />
+          {repo.language ?? "No language"}
+        </span>
+        <span className={cn("tag", latest ? "text-accent" : "text-subtle")}>
+          {latest && "Latest push · "}
+          <RelativeTime iso={repo.pushedAt} />
+        </span>
+      </div>
 
-async function Board() {
+      <h3
+        className={cn(
+          "font-display text-fg mt-6 font-bold tracking-tight wrap-break-word",
+          latest ? "text-[clamp(1.6rem,1.1rem+1.6vw,2.6rem)] leading-none" : "text-2xl",
+        )}
+      >
+        <a
+          href={repo.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group-hover:text-accent after:absolute after:inset-0"
+        >
+          {repo.name}
+        </a>
+      </h3>
+      {repo.description && (
+        <p
+          className={cn(
+            "text-muted mt-3",
+            latest ? "max-w-[52ch] text-lg leading-relaxed" : "line-clamp-3 text-sm",
+          )}
+        >
+          {repo.description}
+        </p>
+      )}
+
+      <div className="mt-auto flex flex-wrap items-center gap-2 pt-6">
+        {repo.topics.slice(0, 3).map((t) => (
+          <span
+            key={t}
+            className="border-line text-muted rounded-full border px-2 py-0.5 font-mono text-[10px]"
+          >
+            {t}
+          </span>
+        ))}
+        <span className="ml-auto flex items-center gap-3">
+          <span className="text-muted flex items-center gap-1 font-mono text-xs">
+            <Star size={12} aria-hidden /> <span className="sr-only">Stars:</span>
+            {repo.stars}
+          </span>
+          {repo.homepage && (
+            <a
+              href={repo.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-fg text-bg hover:bg-accent hover:text-ink relative z-1 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold"
+              aria-label={`${repo.name} live demo`}
+            >
+              Live <ArrowUpRight size={12} />
+            </a>
+          )}
+        </span>
+      </div>
+    </li>
+  );
+}
+
+async function Feed() {
   const { repos, source } = await getRecentRepos();
-  const latest = repos[0];
-
   return (
     <>
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        {latest && (
-          <p className="flex items-center gap-2.5 text-sm text-muted">
-            <span className="relative grid size-4 place-items-center">
-              <span className="animate-ping-slow absolute inset-0.5 rounded-full bg-ok/60" />
-              <span className="relative size-1.5 rounded-full bg-ok" />
-            </span>
-            Latest push: <span className="font-mono text-fg">{latest.name}</span>
-            <span className="text-subtle">
-              <RelativeTime iso={latest.pushedAt} />
-            </span>
-          </p>
-        )}
-        <p className="hud text-subtle">
-          {source === "live" ? "Live from the GitHub API · refreshed hourly" : "Snapshot · live feed unavailable"}
-        </p>
-      </div>
-
-      <div className="overflow-hidden rounded-[1.25rem] border border-line bg-sunken">
-        <div className={`hud hidden gap-6 border-b border-line px-6 py-3 text-subtle md:grid ${cols}`}>
-          <span>Repository</span>
-          <span>Language</span>
-          <span>Stars</span>
-          <span>Last push</span>
-          <span className="text-right">Gate</span>
-        </div>
-        <ul className="divide-y divide-line">
-          {repos.map((r) => (
-            <li key={r.name} className={`group relative grid gap-x-6 gap-y-2 px-5 py-5 transition-colors hover:bg-raised md:px-6 ${cols} md:items-center`}>
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <a
-                    href={r.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-[0.95rem] text-fg after:absolute after:inset-0 hover:text-accent"
-                  >
-                    {r.name}
-                  </a>
-                  {r.claudeCode && <ClaudeCodeBadge className="relative z-[1]" />}
-                </div>
-                {r.description && <p className="mt-1.5 line-clamp-2 max-w-[62ch] text-sm text-muted">{r.description}</p>}
-                {r.topics.length > 0 && (
-                  <p className="mt-2 flex flex-wrap gap-1.5">
-                    {r.topics.slice(0, 4).map((t) => (
-                      <span key={t} className="rounded-md bg-line px-1.5 py-0.5 font-mono text-[10px] text-muted">
-                        {t}
-                      </span>
-                    ))}
-                  </p>
-                )}
-              </div>
-              <span className="flex items-center gap-2 text-sm text-muted">
-                <span
-                  className="size-2.5 rounded-full"
-                  style={{ background: r.language ? (languageColours[r.language] ?? "var(--fg-subtle)") : "var(--line-strong)" }}
-                  aria-hidden
-                />
-                {r.language ?? "—"}
-              </span>
-              <span className="flex items-center gap-1.5 font-mono text-sm text-muted">
-                <Star size={13} strokeWidth={1.75} aria-hidden />
-                <span className="sr-only">Stars:</span>
-                {r.stars}
-              </span>
-              <span className="font-mono text-sm text-muted">
-                <RelativeTime iso={r.pushedAt} />
-              </span>
-              <span className="relative z-[1] flex items-center gap-1 md:justify-end">
-                {r.homepage && (
-                  <a
-                    href={r.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="grid size-8 place-items-center rounded-full text-muted hover:bg-line hover:text-fg"
-                    aria-label={`${r.name} live demo`}
-                  >
-                    <ExternalLink size={15} strokeWidth={1.75} />
-                  </a>
-                )}
-                <a
-                  href={r.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="grid size-8 place-items-center rounded-full text-muted hover:bg-line hover:text-fg"
-                  aria-label={`${r.name} on GitHub`}
-                >
-                  <GitHubIcon size={15} />
-                </a>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <p className="tag text-subtle mb-5 flex items-center gap-2">
+        <span
+          className={cn("size-1.5 rounded-full", source === "live" ? "bg-lime" : "bg-yellow")}
+        />
+        {source === "live"
+          ? "Live from the GitHub API · refreshed hourly"
+          : "Snapshot · live feed unavailable right now"}
+      </p>
+      <ul className="grid gap-4 md:grid-cols-3">
+        {repos.map((r, i) => (
+          <RepoTile key={r.name} repo={r} latest={i === 0} />
+        ))}
+      </ul>
     </>
   );
 }
 
-function BoardSkeleton() {
+function FeedSkeleton() {
   return (
     <div aria-busy="true" aria-label="Loading recent repositories">
-      <div className="skeleton mb-5 h-5 w-64" />
-      <div className="divide-y divide-line overflow-hidden rounded-[1.25rem] border border-line">
+      <div className="skeleton mb-5 h-4 w-60" />
+      <div className="grid gap-4 md:grid-cols-3">
         {Array.from({ length: 6 }, (_, i) => (
-          <div key={i} className={`grid gap-6 px-6 py-6 ${cols}`}>
-            <div className="space-y-2">
-              <div className="skeleton h-4 w-40" />
-              <div className="skeleton h-3 w-72 max-w-full" />
-            </div>
-            <div className="skeleton hidden h-3 w-20 md:block" />
-            <div className="skeleton hidden h-3 w-8 md:block" />
-            <div className="skeleton hidden h-3 w-24 md:block" />
-            <div className="skeleton ml-auto hidden size-8 rounded-full md:block" />
-          </div>
+          <div
+            key={i}
+            className={cn(
+              "skeleton h-52 rounded-[1.75rem]",
+              i === 0 && "md:col-span-2 md:row-span-2 md:h-auto",
+            )}
+          />
         ))}
       </div>
     </div>
@@ -136,28 +127,36 @@ function BoardSkeleton() {
 
 export function GitHubSection() {
   return (
-    <section id="github" className="container-page py-24 md:py-32">
-      <SectionHeading
-        id="github"
-        kicker="Latest on GitHub"
-        title={
-          <>
-            Departures: <Accent>what I pushed recently.</Accent>
-          </>
-        }
-        intro="This board updates itself from GitHub. If it says three days ago, I was coding three days ago."
-      />
-      <Suspense fallback={<BoardSkeleton />}>
-        <Board />
-      </Suspense>
+    <section id="github" data-scene="github" className="container-page relative py-28 md:py-40">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <SectionLabel index="04" label="Live from GitHub" />
+          <h2 className="headline text-display mt-5">
+            Fresh <span className="text-signal">commits.</span>
+          </h2>
+        </div>
+        <p className="text-muted max-w-[40ch] text-lg leading-relaxed">
+          This updates itself. If it says three days ago, I was shipping three days ago.
+        </p>
+      </div>
+
+      <div className="mt-12">
+        <Suspense fallback={<FeedSkeleton />}>
+          <Feed />
+        </Suspense>
+      </div>
+
       <a
         href={`https://github.com/${GITHUB_USER}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="group mt-6 inline-flex items-center gap-2 text-sm text-muted hover:text-fg"
+        className="group text-fg hover:text-accent mt-8 inline-flex items-center gap-2 font-medium"
       >
-        <GitHubIcon size={15} /> All repositories on GitHub
-        <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <GitHubIcon size={16} /> Everything on GitHub
+        <ArrowUpRight
+          size={15}
+          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
       </a>
     </section>
   );

@@ -139,4 +139,4 @@ public/
 - Do not fabricate facts about Sairaj. Anything unknown becomes a `TODO` surfaced in the final summary.
 - Do not expose confidential Ergode data, secrets, phone number or a home address.
 - Ask before adding paid services or large dependencies.
-- When finished, give a short summary: what was built, what is still `TODO`, and how to run it (`npm install && npm run dev`).
+- When finished, give a short summary: what was built, what is still `TODO`, and how to run it (`npm install && npm run dev`).k

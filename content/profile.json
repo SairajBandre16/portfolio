@@ -7,39 +7,28 @@
     "country": "Ireland",
     "lat": 53.35,
     "lon": -6.26,
-    "timeZone": "Europe/Dublin"
+    "timeZone": "Europe/Dublin",
+    "from": {
+      "city": "Mumbai",
+      "country": "India"
+    }
   },
   "email": "sairajbandre16@gmail.com",
   "links": {
     "github": "https://github.com/SairajBandre16",
     "linkedin": "https://www.linkedin.com/in/sairajbandre/",
-    "resume": "/Sairaj-Bandre-Resume.pdf"
+    "resume": "/Sairaj-Bandre-Resume.pdf",
+    "blog": "https://ctrl-automate.vercel.app"
   },
-  "headline": {
-    "lead": "From automating warehouses",
-    "accent": "to building AI systems."
-  },
-  "roles": [
-    "aspiring AI engineer",
-    "building with Claude Code",
-    "ex-automation engineer",
-    "MSc Computer Science at UCD"
-  ],
-  "pitch": "I spent a year building the automation behind real e-commerce operations. Now I'm in Dublin doing an MSc and turning that into AI engineering, shipping one project at a time with Claude Code as my pair-programmer.",
   "summary": "AI-focused Computer Science postgraduate (B.E. in Artificial Intelligence & Data Science) with hands-on experience building AI agent workflows, automation and data pipelines in production, plus deep learning, computer vision and NLP projects. Two published research papers.",
-  "seeking": ["AI Engineer", "Applied AI Engineer", "ML Engineer", "Data Scientist"],
-  "now": {
-    "building": "QueryForge",
-    "buildingHref": "/projects/queryforge",
-    "learning": "RAG and NLP (UCD Text Analytics)"
-  },
+  "seeking": [
+    "AI Engineer",
+    "Applied AI Engineer",
+    "ML Engineer",
+    "Data Scientist"
+  ],
   "about": {
-    "story": [
-      "I started out at Ergode, an e-commerce company, first as an AI intern and then running supply-chain automation. The work was practical: orders flowing through Walmart DSV and Shein portals, Amazon Seller Central workflows the API didn't cover, reports nobody wanted to build by hand. I built the bots, pipelines and n8n agent workflows that did it instead.",
-      "That job taught me the part of AI that demos skip: data is messy, systems break in ways nobody planned for, and a tool only counts if people actually use it. I moved to Dublin for an MSc in Computer Science at UCD to go deeper on the models themselves.",
-      "Now I'm building towards an AI engineering role in public: text-to-SQL agents, supply-chain risk models, evaluation harnesses. Every project ships on GitHub with honest numbers, including the ones that didn't work."
-    ],
-    "aside": "Off the keyboard I'm usually looking up. I'm a plane-spotter with Flightradar open far more than I'd like to admit, which is how a 3D plane-tracking app ended up in this portfolio.",
+    "aside": "Off the keyboard I’m usually looking up. I’m a plane-spotter with Flightradar open far more than I’d like to admit.",
     "loop": [
       {
         "step": "Learn",
@@ -47,11 +36,34 @@
       },
       {
         "step": "Build",
-        "body": "Build something real with it, with Claude Code as pair-programmer and me owning the decisions."
+        "body": "Build something real with it, with Claude Code as pair-programmer and me making the calls."
       },
       {
         "step": "Ship",
         "body": "Push it to GitHub with tests, a write-up and the numbers, good or bad."
+      }
+    ],
+    "manifesto": "I got into AI through automation: n8n agents, RPA bots and data pipelines that teams relied on daily. Now I’m going deeper on the models behind them.",
+    "facts": [
+      {
+        "label": "From",
+        "value": "Mumbai, India",
+        "note": "Now in Dublin, Ireland"
+      },
+      {
+        "label": "Now",
+        "value": "MSc Computer Science, UCD",
+        "note": "2026 – 2027"
+      },
+      {
+        "label": "Before",
+        "value": "Automation Executive, Ergode",
+        "note": "Jan – Jul 2026, after an AI internship"
+      },
+      {
+        "label": "Published",
+        "value": "2 research papers",
+        "note": "ICCCNT 2025 · IJRTI 2023"
       }
     ]
   },
@@ -68,7 +80,13 @@
         "Solved a hard integration gap by building RPA-driven automation for Amazon Seller Central workflows not covered by the SP-API, removing manual handling of high-volume processes.",
         "Debugged, optimised and scaled automation systems with cross-functional teams, quickly learning unfamiliar codebases to improve reliability and performance."
       ],
-      "tags": ["Python", "RPA", "SQL", "Data pipelines"]
+      "tags": [
+        "Python",
+        "RPA",
+        "SQL",
+        "Data pipelines"
+      ],
+      "summary": "Built and ran live automation, SQL reporting tools and RPA for high-volume e-commerce operations, including the workflows no official API covered."
     },
     {
       "role": "AI Intern",
@@ -81,7 +99,13 @@
         "Built automated report generation from databases and Excel, delivering accurate, timely output to support data-driven decisions.",
         "Implemented RPA tools to eliminate repetitive manual tasks, improving data quality and saving employee time."
       ],
-      "tags": ["n8n", "LLM agents", "RPA", "Reporting"]
+      "tags": [
+        "n8n",
+        "LLM agents",
+        "RPA",
+        "Reporting"
+      ],
+      "summary": "Designed and deployed n8n AI agent workflows and automated reporting across departments, turning requests into tools people used every day."
     }
   ],
   "education": [
@@ -91,7 +115,8 @@
       "place": "Dublin",
       "start": "2026",
       "end": "2027",
-      "note": "Current. Includes the Text Analytics module."
+      "note": "Current. Includes the Text Analytics module.",
+      "summary": "Now. Going deeper on NLP, text analytics and machine learning."
     },
     {
       "degree": "B.E. Artificial Intelligence & Data Science",
@@ -99,7 +124,8 @@
       "place": "Nerul",
       "start": "2021",
       "end": "2025",
-      "note": "Two published research papers from undergraduate projects."
+      "note": "Two published research papers from undergraduate projects.",
+      "summary": "Where it started: deep learning, computer vision and two published papers."
     }
   ],
   "publications": [
@@ -123,19 +149,59 @@
   "skills": [
     {
       "group": "AI / ML",
-      "items": ["LLM agents", "NLP", "Deep learning", "Computer vision", "PyTorch", "TensorFlow", "OpenCV", "LightGBM", "SHAP", "Ollama", "MCP"]
+      "items": [
+        "LLM agents",
+        "NLP",
+        "Deep learning",
+        "Computer vision",
+        "PyTorch",
+        "TensorFlow",
+        "OpenCV",
+        "LightGBM",
+        "SHAP",
+        "Ollama",
+        "MCP"
+      ]
     },
     {
       "group": "Automation",
-      "items": ["n8n", "RPA", "Selenium", "Business process automation", "API integration", "Backend automation"]
+      "items": [
+        "n8n",
+        "RPA",
+        "Selenium",
+        "Business process automation",
+        "API integration",
+        "Backend automation"
+      ]
     },
     {
       "group": "Data",
-      "items": ["SQL", "Data pipelines", "SQL reporting", "Data management", "pandas", "Evaluation harnesses"]
+      "items": [
+        "SQL",
+        "Data pipelines",
+        "SQL reporting",
+        "Data management",
+        "pandas",
+        "Evaluation harnesses"
+      ]
     },
     {
       "group": "Languages & tools",
-      "items": ["Python", "Java", "TypeScript", "FastAPI", "Flask", "Streamlit", "Next.js", "React", "Flutter", "Three.js", "Docker", "Git", "Claude Code"]
+      "items": [
+        "Python",
+        "Java",
+        "TypeScript",
+        "FastAPI",
+        "Flask",
+        "Streamlit",
+        "Next.js",
+        "React",
+        "Flutter",
+        "Three.js",
+        "Docker",
+        "Git",
+        "Claude Code"
+      ]
     }
   ],
   "roadmap": [
@@ -149,7 +215,7 @@
       "title": "Computer vision and classic NLP",
       "where": "Undergraduate projects and papers",
       "status": "logged",
-      "proof": "Scan To Measure, News Summarizer"
+      "proof": "Scan To Measure, News Summariser"
     },
     {
       "title": "Agent workflows in production",
@@ -165,7 +231,7 @@
     },
     {
       "title": "Tool-using LLM agents",
-      "where": "ChainWatch and QueryForge MCP server",
+      "where": "Shipped: QueryForge MCP server · Building: ChainWatch",
       "status": "enroute",
       "proof": "Typed tools, guard rails, grounded briefs"
     },
@@ -187,5 +253,15 @@
       "status": "planned",
       "proof": "Small open models, LoRA"
     }
-  ]
+  ],
+  "intro": {
+    "greeting": "Hi, I’m",
+    "name": "Sairaj.",
+    "line": "A master’s student at UCD, learning AI and building with Claude Code.",
+    "accents": [
+      "UCD",
+      "AI",
+      "Claude Code"
+    ]
+  }
 }

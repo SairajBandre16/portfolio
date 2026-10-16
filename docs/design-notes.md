@@ -17,36 +17,18 @@ Studied for inspiration only. Nothing below is copied: no layouts, copy, code or
 
 Common threads: one personal motif, a live "now" signal (clock, status, currently building), honest status tags on projects, and typography doing most of the work.
 
-## Direction: "Flight deck"
+## Direction v2: "Signal" (2026-10-09)
 
-The site is a climb. Sairaj starts on the ground (warehouse automation) and climbs towards cruise (AI engineer). The plane-spotting hobby gives the visual language.
+Sairaj found v1 (flight deck) too safe: familiar layout, default-looking fonts, too much warehouse detail. v2 was shaped by the perfolios.shwn.design gallery, where the memorable sites are built around one interactive world you can play with (Chloe Yan's garden is the clearest example).
 
-- **Altitude as navigation.** Each section has a flight level (`GND`, `FL010`, `FL020` … `FL090`). A small altimeter readout on desktop shows the current level as you scroll. The metaphor carries the narrative without explaining it.
-- **Radar scope in the hero.** An SVG radar with a slow sweep. The blips are his projects, labelled with callsigns (`QFG-01`, `SQK-03`). They light up as the sweep passes. Pure SVG and CSS transforms: no WebGL in the hero.
-- **HUD labels.** Geist Mono for coordinates (`53.35°N 6.26°W`), a live Dublin clock, status chips and section labels.
-- **Flight plan for learning.** The roadmap is a route with waypoints marked logged, en route or planned. The line draws itself as you scroll.
-- **Departures board for GitHub.** The live GitHub feed is a board of rows (repo, language, stars, last push), visually distinct from the curated bento cards above it.
+- **One living particle field.** A single fixed three.js canvas sits behind every page. About 10k particles morph into a new shape per section: neural core (hero), "SB" initials (about), neural net (learning path), database / globe / plane / torus-knot loop (one per project), wave field (playground), helix (GitHub), galaxy (background), "hi!" (contact). Sections declare `data-scene`; `SceneDirector` publishes the active one on `<html data-scene>`.
+- **Colour per scene.** Six signal colours (lime, coral, cyan, sky, pink, yellow). Each scene owns a pair, and `--accent` / `--accent-2` are registered with `@property`, so the whole UI re-tints smoothly as you scroll. The engine reads the same CSS variables, so the palette has one source of truth.
+- **Play.** Particles flee the cursor and ripple when you click empty space; the hero letters scramble on hover; an "ask my agent" terminal (a keyword router that admits it is not an LLM); a wire-a-bot builder; a plane-spotting easter egg; and a "secrets found 0/5" tracker tying them together.
+- **Type.** Syne (display, 800), Bricolage Grotesque (body), Martian Mono (labels), Doto (dot-matrix numbers). No Geist, Inter or Instrument Serif.
+- **Layout.** Giant split name (outlined second line), scroll-lit manifesto, a horizontal-scroll learning path, full-height project blocks where the particles are the diagram, a GitHub bento, and a huge contact headline.
+- **Content.** About Sairaj, not warehouses. The Ergode project card is gone; Ergode appears only as two one-line timeline entries.
 
-### Type
-- Geist for UI and body, Geist Mono for HUD labels and numbers.
-- Instrument Serif italic as the single editorial accent, used sparingly in headlines.
-- Fluid scale with `clamp()`.
-
-### Colour
-- Dark-first. Background `#0d0e10` (near-black, slightly cool), raised surfaces a step lighter, hairlines at ~8% white.
-- One accent: **signal amber**, like cockpit annunciators and his GitHub profile's orange. Desaturated for dark mode and darkened for AA on the light theme.
-- Light theme is warm paper (`#f3f1ec`) with near-black ink.
-
-### Motion
-- Lenis smooth scroll, staggered reveals, magnetic CTAs, spotlight borders on cards, a scroll-progress bar and a radar sweep. Transform and opacity only.
-- A small HUD reticle follows the cursor on fine-pointer devices. The native cursor stays visible.
-- `prefers-reduced-motion` turns off Lenis, the sweep, the reticle, marquees and reveals.
-
-### Avoided on purpose
-Purple gradients, glassmorphism everywhere, emoji, skill bars, three identical cards in a row, centred-everything layouts, and replacing the native cursor.
-
-### Deviations from CLAUDE.md (and why)
-- **No Octokit:** a typed `fetch` with Next's `'use cache'` and `cacheLife('hours')` does the same job with no dependency.
-- **No shadcn/ui install yet:** the site needs only a handful of primitives, so they're hand-built with the same token approach. It can be added later if forms grow.
-- **No React Three Fiber:** SQUAWK already is the 3D piece, so the portfolio shows its real screenshots and links to the live app instead of shipping a second 3D bundle.
-- **Typed data in `content/projects.ts` instead of MDX:** same "copy lives in content/" rule, with no MDX toolchain.
+### Performance and accessibility
+- three.js is dynamically imported after first paint (separate ~136 KB gzip chunk). Particle count scales with screen size and CPU cores. The canvas pauses when the tab is hidden.
+- `prefers-reduced-motion`: no Lenis, no drift, instant morphs (a static frame per scene), no plane flights, static text.
+- No WebGL: the canvas is simply skipped; the page is complete without it.

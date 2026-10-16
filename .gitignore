@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private resume source (contains phone number)
+content/*.docx
+content/resume.pdf

@@ -25,7 +25,10 @@ const absolute = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "shor
 /** "2 days ago", computed in the browser so cached HTML never goes stale. */
 export function RelativeTime({ iso }: { iso: string }) {
   const [label, setLabel] = useState<string | null>(null);
-  useEffect(() => setLabel(relative(iso)), [iso]);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setLabel(relative(iso)));
+    return () => cancelAnimationFrame(id);
+  }, [iso]);
   return (
     <time dateTime={iso} title={absolute.format(new Date(iso))} suppressHydrationWarning>
       {label ?? absolute.format(new Date(iso))}

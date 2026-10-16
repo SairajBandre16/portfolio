@@ -33,7 +33,7 @@ export function CopyEmail({ email }: { email: string }) {
           exit={{ opacity: 0, y: -6 }}
           className="inline-flex items-center gap-2"
         >
-          {copied ? <Check size={15} className="text-ok" /> : <Copy size={15} strokeWidth={1.75} />}
+          {copied ? <Check size={15} className="text-lime" /> : <Copy size={15} strokeWidth={1.75} />}
           {copied ? "Copied" : failed ? "Copy failed, select the address" : "Copy email"}
         </motion.span>
       </AnimatePresence>

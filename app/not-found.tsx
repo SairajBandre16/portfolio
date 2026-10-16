@@ -1,27 +1,22 @@
+import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button-link";
 
 export default function NotFound() {
   return (
-    <main id="main" className="relative isolate grid min-h-[100dvh] place-items-center overflow-hidden">
-      <div
-        aria-hidden
-        className="hairline-grid absolute inset-0 -z-10 [mask-image:radial-gradient(circle_at_center,#000_15%,transparent_65%)]"
-      />
-      <div className="container-page max-w-2xl">
-        <p className="hud text-accent">Squawk 7600 · lost comms</p>
-        <h1 className="mt-6 text-hero leading-[0.95] font-medium tracking-[-0.045em] text-fg">
-          404. <em className="font-serif font-normal text-accent">Off the radar.</em>
-        </h1>
-        <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-muted">
-          This page doesn&apos;t exist, or it flew off somewhere. Let&apos;s get you back on the flight plan.
-        </p>
-        <div className="mt-10">
-          <ButtonLink href="/" variant="primary">
-            <ArrowLeft size={16} /> Return to base
-          </ButtonLink>
-        </div>
-      </div>
+    <main id="main" data-scene="lost" className="container-page flex min-h-dvh flex-col justify-center py-28">
+      <p className="tag text-accent">Error 404 · signal lost</p>
+      <h1 className="headline mt-6 text-mega">
+        4<span className="text-signal">0</span>4
+      </h1>
+      <p className="mt-6 max-w-[40ch] text-xl leading-relaxed text-muted">
+        This page drifted off into space. The particles are looking for it; you can head home in the meantime.
+      </p>
+      <Link
+        href="/"
+        className="mt-10 inline-flex h-12 w-fit items-center gap-2 rounded-full bg-accent px-6 font-semibold text-ink transition-transform active:scale-[0.97]"
+      >
+        <ArrowLeft size={16} /> Back to base
+      </Link>
     </main>
   );
 }

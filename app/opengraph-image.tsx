@@ -1,64 +1,38 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Sairaj Bandre: from automating warehouses to building AI systems";
+export const alt = "Sairaj Bandre: aspiring AI engineer in Dublin, building LLM agents and automations";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const bg = "#0d0e10";
-const fg = "#ecebe8";
-const muted = "#a3a3a8";
-const accent = "#eea53a";
+const bg = "#0b0b0f";
+const fg = "#f3f1ea";
+const muted = "#a9a8b2";
+const palette = ["#c8f53a", "#45e3f2", "#ff6b45", "#ff5fa2", "#ffd23f", "#7aaeff"];
+
+// A deterministic sprinkle of "particles" in the scene colours.
+const dots = Array.from({ length: 140 }, (_, i) => {
+  const a = i * 2.399963;
+  const r = 40 + Math.sqrt(i) * 19;
+  return { x: 900 + Math.cos(a) * r, y: 315 + Math.sin(a) * r * 0.92, c: palette[i % palette.length], s: 3 + (i % 4) };
+});
 
 export default function OpengraphImage() {
-  const rings = [420, 300, 180];
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          background: bg,
-          color: fg,
-          padding: 72,
-          position: "relative",
-          fontFamily: "sans-serif",
-        }}
-      >
-        {/* Radar rings on the right */}
-        {rings.map((d) => (
+      <div style={{ width: "100%", height: "100%", display: "flex", background: bg, color: fg, padding: 72, position: "relative" }}>
+        {dots.map((d, i) => (
           <div
-            key={d}
-            style={{
-              position: "absolute",
-              right: 120 - d / 2 + 210,
-              top: 315 - d / 2,
-              width: d,
-              height: d,
-              borderRadius: d,
-              border: "1px solid rgba(255,255,255,0.12)",
-            }}
+            key={i}
+            style={{ position: "absolute", left: d.x, top: d.y, width: d.s, height: d.s, borderRadius: d.s, background: d.c, opacity: 0.85 }}
           />
         ))}
-        <div style={{ position: "absolute", right: 322, top: 307, width: 16, height: 16, borderRadius: 16, background: fg }} />
-        <div style={{ position: "absolute", right: 240, top: 190, width: 18, height: 18, borderRadius: 18, background: accent }} />
-        <div style={{ position: "absolute", right: 420, top: 420, width: 12, height: 12, borderRadius: 12, background: accent, opacity: 0.6 }} />
-
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 760 }}>
-          <div style={{ display: "flex", fontSize: 22, letterSpacing: 3, color: muted }}>
-            53.35°N 6.26°W · DUBLIN · SAIRAJ BANDRE
-          </div>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 700 }}>
+          <div style={{ display: "flex", fontSize: 22, letterSpacing: 3, color: muted }}>FROM MUMBAI · NOW IN DUBLIN</div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 76, lineHeight: 1.02, letterSpacing: -2, fontWeight: 600 }}>
-              From automating warehouses
-            </div>
-            <div style={{ fontSize: 76, lineHeight: 1.02, letterSpacing: -2, color: accent, fontStyle: "italic" }}>
-              to building AI systems.
-            </div>
+            <div style={{ fontSize: 120, lineHeight: 0.9, letterSpacing: -5, fontWeight: 800 }}>SAIRAJ</div>
+            <div style={{ fontSize: 120, lineHeight: 0.9, letterSpacing: -5, fontWeight: 800, color: palette[0] }}>BANDRE</div>
           </div>
-          <div style={{ display: "flex", fontSize: 26, color: muted }}>
-            Aspiring AI Engineer · MSc CS at UCD · building with Claude Code
-          </div>
+          <div style={{ display: "flex", fontSize: 30, color: muted }}>MSc student at UCD · learning AI · LLM agents</div>
         </div>
       </div>
     ),

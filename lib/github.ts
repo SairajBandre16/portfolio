@@ -3,9 +3,25 @@ import fallback from "@/content/github-fallback.json";
 
 export const GITHUB_USER = "SairajBandre16";
 
-// Repos built with Claude Code. Repos can also opt in with the `built-with-claude-code` topic.
-const CLAUDE_CODE_REPOS = new Set(["QueryForge", "ChainWatch", "SQUAWK", "ownit"]);
-const HIDDEN_REPOS = new Set([GITHUB_USER]);
+// Never shown in the feed: the profile README repo and old or empty experiments.
+const HIDDEN_REPOS = new Set([
+  GITHUB_USER,
+  "Fake-Instagram-Account-Detection",
+  "Creditcard-fraud",
+  "MunchMap",
+]);
+
+// Shown when a repo has no description on GitHub. A description set on GitHub always wins.
+const FALLBACK_DESCRIPTIONS: Record<string, string> = {
+  SQUAWK:
+    "The sky above you, live in 3D: real-time aircraft over satellite imagery, built for plane-spotting.",
+  ownit: "Turns an AI-assisted draft into a student's own work, and checks they understand it.",
+  RainWise:
+    "Predicts rainfall, then tells you how much rainwater to store. Published at ICCCNT 2025.",
+  "Scan-to-Measure":
+    "Real-time object size measurement with OpenCV and ArUco markers. Published in IJRTI 2023.",
+  "News-Summarizer": "Full-stack NLP app that summarises news across categories.",
+};
 
 export type Repo = {
   name: string;
@@ -16,7 +32,6 @@ export type Repo = {
   pushedAt: string;
   homepage: string | null;
   topics: string[];
-  claudeCode: boolean;
 };
 
 export type RepoFeed = { repos: Repo[]; source: "live" | "fallback"; fetchedAt: string };
@@ -39,20 +54,16 @@ function normalise(list: ApiRepo[]): Repo[] {
     .filter((r) => !r.fork && !r.archived && !HIDDEN_REPOS.has(r.name))
     .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
     .slice(0, 6)
-    .map((r) => {
-      const topics = r.topics ?? [];
-      return {
-        name: r.name,
-        url: r.html_url,
-        description: r.description?.trim() || null,
-        language: r.language,
-        stars: r.stargazers_count,
-        pushedAt: r.pushed_at,
-        homepage: r.homepage?.trim() || null,
-        topics: topics.filter((t) => t !== "built-with-claude-code"),
-        claudeCode: CLAUDE_CODE_REPOS.has(r.name) || topics.includes("built-with-claude-code"),
-      };
-    });
+    .map((r) => ({
+      name: r.name,
+      url: r.html_url,
+      description: r.description?.trim() || FALLBACK_DESCRIPTIONS[r.name] || null,
+      language: r.language,
+      stars: r.stargazers_count,
+      pushedAt: r.pushed_at,
+      homepage: r.homepage?.trim() || null,
+      topics: (r.topics ?? []).filter((t) => t !== "built-with-claude-code"),
+    }));
 }
 
 function fromFallback(): RepoFeed {

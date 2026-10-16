@@ -1,20 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Bricolage_Grotesque, Doto, Martian_Mono, Syne } from "next/font/google";
 import { Providers } from "@/components/shell/providers";
 import { SmoothScroll } from "@/components/shell/smooth-scroll";
 import { ScrollProgress } from "@/components/shell/scroll-progress";
-import { Reticle } from "@/components/shell/reticle";
+import { PlaneSpotter } from "@/components/shell/plane-spotter";
+import { ParticleField } from "@/components/signal/particle-field";
+import { SceneDirector } from "@/components/signal/scene-director";
 import { Nav } from "@/components/shell/nav";
+import { CommandMenu } from "@/components/shell/command-menu";
+import { projects } from "@/content/projects";
 import { profile, siteDescription, siteTitle, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+// Variable, so the hero can pair a regular greeting with an extra-bold name.
+const syne = Syne({ variable: "--font-syne", subsets: ["latin"] });
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
-  weight: "400",
-  style: ["italic", "normal"],
+  axes: ["opsz", "wdth"],
+});
+const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], preload: false });
+const doto = Doto({
+  variable: "--font-doto",
+  subsets: ["latin"],
+  weight: ["700", "900"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -48,8 +58,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0d0e10" },
-    { media: "(prefers-color-scheme: light)", color: "#f3f1ec" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0f" },
+    { media: "(prefers-color-scheme: light)", color: "#f1eee6" },
   ],
 };
 
@@ -65,33 +75,53 @@ const personJsonLd = {
     { "@type": "CollegeOrUniversity", name: "University College Dublin" },
     { "@type": "CollegeOrUniversity", name: "SIES Graduate School of Technology" },
   ],
-  knowsAbout: ["Artificial intelligence", "Machine learning", "LLM agents", "Text-to-SQL", "RPA", "n8n"],
+  knowsAbout: [
+    "Artificial intelligence",
+    "Machine learning",
+    "LLM agents",
+    "Text-to-SQL",
+    "RPA",
+    "n8n",
+  ],
   sameAs: [profile.links.github, profile.links.linkedin],
 };
+
+const commandProjects = projects.map(({ slug, title, tagline, callsign }) => ({
+  slug,
+  title,
+  tagline,
+  callsign,
+}));
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
+      data-scene="core"
+      className={`${syne.variable} ${bricolage.variable} ${martian.variable} ${doto.variable} antialiased`}
     >
       <body className="min-h-dvh">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         <Providers>
           <a
             href="#main"
-            className="fixed top-3 left-3 z-[80] -translate-y-20 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-ink transition-transform focus:translate-y-0"
+            className="bg-accent text-ink fixed top-3 left-3 z-[80] -translate-y-20 rounded-full px-4 py-2 text-sm font-medium transition-transform focus:translate-y-0"
           >
             Skip to content
           </a>
           <ScrollProgress />
           <Nav />
           <SmoothScroll />
-          <Reticle />
+          <SceneDirector />
+          <ParticleField />
+          <PlaneSpotter />
+          <CommandMenu projects={commandProjects} />
           {children}
         </Providers>
       </body>

@@ -16,16 +16,3 @@ export function LinkedInIcon({ size = 18, ...props }: IconProps) {
     </svg>
   );
 }
-
-/** The site mark: initials inside a radar ring. */
-export function Mark({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden>
-      <circle cx="16" cy="16" r="15" stroke="currentColor" strokeOpacity="0.25" />
-      <circle cx="16" cy="16" r="9.5" stroke="currentColor" strokeOpacity="0.15" />
-      <path d="M16 16 L16 1 A15 15 0 0 1 29.5 9.5 Z" fill="var(--accent)" fillOpacity="0.28" />
-      <circle cx="22.5" cy="8.5" r="1.6" fill="var(--accent)" />
-      <text x="16" y="20" textAnchor="middle" fontFamily="var(--font-geist-mono)" fontSize="10" fontWeight="600" fill="currentColor">SB</text>
-    </svg>
-  );
-}

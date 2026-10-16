@@ -1,100 +1,71 @@
-import Link from "next/link";
-import { ArrowDownRight, ArrowRight, FileDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { profile } from "@/lib/site";
-import { ButtonLink } from "@/components/ui/button-link";
 import { Magnetic } from "@/components/ui/magnetic";
 import { LiveClock } from "./live-clock";
-import { RoleTicker } from "./role-ticker";
-import { Radar } from "./radar";
+import { PipelineLabels } from "./pipeline-labels";
+
+/** Wraps each accent phrase in the line with the signal gradient. */
+function Highlight({ line, accents }: { line: string; accents: string[] }) {
+  const pattern = new RegExp(
+    `(${accents.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+  );
+  return line.split(pattern).map((part, i) =>
+    accents.includes(part) ? (
+      <span key={i} className="text-signal">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
 
 export function Hero() {
-  const { location, now } = profile;
+  const { intro, location } = profile;
   return (
-    <section id="top" className="relative isolate overflow-hidden">
-      {/* Hairline grid that fades out towards the edges */}
-      <div
-        aria-hidden
-        className="hairline-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_70%_60%_at_65%_45%,#000_25%,transparent_75%)]"
-      />
+    <section id="top" data-scene="core" className="relative flex min-h-dvh flex-col pt-24 pb-16">
+      <PipelineLabels />
+      <div className="container-page my-auto">
+        <div className="rise max-w-[46rem]">
+          <p className="tag text-muted flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span>
+              {location.from.city}, {location.from.country}
+            </span>
+            <ArrowRight size={12} aria-hidden className="text-accent" />
+            <span className="sr-only">now in</span>
+            <span className="text-fg">
+              {location.city}, {location.country}
+            </span>
+            <span aria-hidden className="text-subtle">
+              ·
+            </span>
+            <span>
+              <LiveClock seconds={false} /> local
+            </span>
+          </p>
 
-      <div className="container-page flex min-h-[100dvh] flex-col pt-24 pb-10 sm:pt-28">
-        <div className="rise hud flex flex-wrap items-center gap-x-4 gap-y-2 text-subtle">
-          <span>
-            {location.lat.toFixed(2)}°N {Math.abs(location.lon).toFixed(2)}°W
-          </span>
-          <span aria-hidden>/</span>
-          <span>
-            {location.city} <LiveClock />
-          </span>
-          <span className="hidden sm:inline" aria-hidden>
-            /
-          </span>
-          <span className="hidden sm:inline">MSc CS · UCD</span>
-        </div>
+          <h1 className="font-display mt-7 text-[min(clamp(2.6rem,1.4rem+3.8vw,5.25rem),12dvh)] leading-[1.04] font-normal tracking-[-0.03em]">
+            {intro.greeting} <strong className="font-extrabold">{intro.name}</strong>
+          </h1>
+          <p className="text-lead text-muted mt-6 max-w-[30ch] leading-snug font-normal">
+            <Highlight line={intro.line} accents={intro.accents} />
+          </p>
 
-        <div className="grid flex-1 items-center gap-12 py-10 md:grid-cols-12 md:gap-6 md:py-12">
-          <div className="md:col-span-7">
-            <div className="rise" style={{ "--d": "0.05s" } as React.CSSProperties}>
-              <Link
-                href={now.buildingHref}
-                className="group inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-raised/70 py-1.5 pr-4 pl-2 text-sm text-muted transition-colors hover:border-line-strong hover:text-fg"
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Magnetic>
+              <a
+                href="#work"
+                className="bg-accent text-ink inline-flex h-12 items-center gap-2 rounded-full px-6 font-semibold transition-transform active:scale-[0.97]"
               >
-                <span className="relative grid size-5 shrink-0 place-items-center">
-                  <span className="animate-ping-slow absolute inset-1 rounded-full bg-ok/60" />
-                  <span className="relative size-2 rounded-full bg-ok" />
-                </span>
-                <span className="truncate">
-                  Building <span className="text-fg">{now.building}</span>
-                  <span className="hidden sm:inline">
-                    {" "}
-                    · learning <span className="text-fg">{now.learning}</span>
-                  </span>
-                </span>
-                <ArrowRight
-                  size={14}
-                  className="shrink-0 transition-transform group-hover:translate-x-0.5"
-                />
-              </Link>
-            </div>
-
-            <div className="rise" style={{ "--d": "0.12s" } as React.CSSProperties}>
-              <h1 className="mt-7 text-hero leading-[0.95] font-medium tracking-[-0.045em] text-balance">
-                <span className="sr-only">{profile.name}: </span>
-                {profile.headline.lead}{" "}
-                <em className="font-serif font-normal tracking-[-0.015em] text-accent italic">
-                  {profile.headline.accent}
-                </em>
-              </h1>
-            </div>
-
-            <div className="rise" style={{ "--d": "0.2s" } as React.CSSProperties}>
-              <p className="mt-7 font-mono text-[0.9rem] text-muted sm:text-base">
-                <span className="text-subtle">{profile.name} / </span>
-                <RoleTicker roles={profile.roles} />
-              </p>
-              <p className="mt-5 max-w-[54ch] text-lg leading-relaxed text-muted">{profile.pitch}</p>
-            </div>
-
-            <div className="rise mt-9 flex flex-wrap items-center gap-3" style={{ "--d": "0.28s" } as React.CSSProperties}>
-              <Magnetic>
-                <ButtonLink href="#work" variant="primary">
-                  View projects <ArrowDownRight size={16} />
-                </ButtonLink>
-              </Magnetic>
-              <ButtonLink href={profile.links.resume} download>
-                <FileDown size={16} strokeWidth={1.75} /> Résumé
-              </ButtonLink>
-              <ButtonLink href="#contact" variant="ghost">
-                Get in touch
-              </ButtonLink>
-            </div>
-          </div>
-
-          <div className="rise px-6 sm:px-10 md:col-span-5 md:px-0" style={{ "--d": "0.2s" } as React.CSSProperties}>
-            <Radar />
-            <p className="hud mt-5 text-center text-subtle">
-              5 contacts on scope · select one to open it
-            </p>
+                See the work <ArrowDown size={16} />
+              </a>
+            </Magnetic>
+            <a
+              href="#contact"
+              className="border-line-strong text-fg hover:bg-line inline-flex h-12 items-center gap-2 rounded-full border px-6 font-medium transition-colors"
+            >
+              Say hello
+            </a>
           </div>
         </div>
       </div>

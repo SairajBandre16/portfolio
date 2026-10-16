@@ -11,7 +11,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       type="button"
       onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
       className={cn(
-        "grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-line hover:text-fg active:scale-95",
+        "text-muted hover:bg-line hover:text-fg grid size-9 place-items-center rounded-full transition-colors active:scale-95",
         className,
       )}
       aria-label="Toggle colour theme"

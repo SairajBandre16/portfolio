@@ -1,5 +1,5 @@
 // Curated projects and case studies. Every number here comes from the project's own README,
-// write-up or results file. Ergode work is described without company data or internal names.
+// write-up or results file.
 
 export type ProjectStatus = "Live" | "In progress" | "Shipped" | "Internal" | "Running";
 
@@ -21,7 +21,8 @@ export type Project = {
   year: string;
   role: string;
   stack: string[];
-  builtWithClaudeCode: boolean;
+  /** A blog, not a build: the home page shows its latest posts. */
+  kind?: "blog";
   links: { demo?: string; repo?: string };
   stats: Stat[];
   summary: string;
@@ -38,8 +39,17 @@ export const projects: Project[] = [
     status: "Live",
     year: "2026",
     role: "Solo build, design to deployment",
-    stack: ["Python", "FastAPI", "SQLite", "sqlglot", "Ollama", "Groq", "MCP", "React", "TypeScript"],
-    builtWithClaudeCode: true,
+    stack: [
+      "Python",
+      "FastAPI",
+      "SQLite",
+      "sqlglot",
+      "Ollama",
+      "Groq",
+      "MCP",
+      "React",
+      "TypeScript",
+    ],
     links: { demo: "https://queryforge-two.vercel.app" },
     stats: [
       { value: "70.8%", label: "execution accuracy on Spider dev" },
@@ -102,15 +112,226 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "ownit",
+    callsign: "OWN-02",
+    title: "OwnIt",
+    tagline: "Turns an AI-assisted draft into a student's own work, and checks they understand it.",
+    status: "Live",
+    year: "2026",
+    role: "Solo build, design to desktop app",
+    stack: [
+      "Python",
+      "FastAPI",
+      "spaCy",
+      "NLTK",
+      "LanguageTool",
+      "Next.js",
+      "TypeScript",
+      "Docker",
+    ],
+    links: {
+      demo: "https://ownit-nine.vercel.app",
+      repo: "https://github.com/SairajBandre16/ownit",
+    },
+    stats: [
+      { value: "5", label: "steps from AI draft to owned work" },
+      { value: "0", label: "AI models or external APIs" },
+      { value: "3", label: "desktop platforms: Windows, macOS, Linux" },
+    ],
+    summary:
+      "OwnIt takes a draft written with AI and walks a student through making it theirs: humanise it, understand it, rewrite the generic parts in their own words, prove they understand it, then export. Every suggestion is rule-based and explained.",
+    sections: [
+      {
+        heading: "The idea",
+        body: [
+          "Students use AI to draft. The hard part is owning the result: understanding it well enough to explain it, and sounding like themselves. OwnIt is built around that, not around hiding the AI.",
+          "Everything is rule-based and explainable. There are no AI models and no external APIs, so every suggestion can say exactly why it was made.",
+        ],
+      },
+      {
+        heading: "Five steps",
+        bullets: [
+          "Humanise: a writing score, explained rewrites to accept or reject, and a report doctor for units, tense, claims and structure.",
+          "Walkthrough: a one-line gist, key terms, a simpler version and a concept map that follows your scrolling.",
+          "Make it yours: generic spots with prompts, your answers inserted as your own text, and an ownership heatmap.",
+          "Prove it: a quiz, a teach-back and a viva simulator.",
+          "Export: a .docx and an understanding report, unlocked once you pass the understanding gate.",
+        ],
+      },
+      {
+        heading: "How it's built",
+        bullets: [
+          "Backend: FastAPI with spaCy, NLTK and WordNet, readability and keyword tools, a trigram or KenLM fluency model and a self-hosted LanguageTool server.",
+          "Frontend: Next.js, TypeScript, Tailwind and shadcn/ui, with TipTap for editing and React Flow for the concept map.",
+          "A desktop app for Windows, macOS and Linux runs the whole backend locally through Docker and updates itself from GitHub releases.",
+          "Extras: a voice fingerprint from your past writing, and spaced-repetition flashcards built from your glossary and missed questions.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "squawk",
+    callsign: "SQK-03",
+    title: "SQUAWK",
+    tagline: "The sky above you, live in 3D. A plane-spotting app built from my favourite hobby.",
+    status: "Live",
+    year: "2026",
+    role: "Solo build, design and engineering",
+    stack: ["JavaScript", "Three.js", "WebGL", "ADS-B feeds", "Firebase", "PWA"],
+    links: {
+      demo: "https://squawk-iota.vercel.app",
+      repo: "https://github.com/SairajBandre16/SQUAWK",
+    },
+    stats: [
+      { value: "5s", label: "live aircraft refresh around you" },
+      { value: "~150", label: "satellites tracked, plus the ISS" },
+      { value: "24", label: "aircraft families to collect" },
+    ],
+    image: {
+      src: "/projects/squawk-wide.jpg",
+      alt: "SQUAWK showing live aircraft over Ireland in 3D",
+    },
+    summary:
+      "SQUAWK shows every aircraft around you in real time over satellite imagery. The sun sits where it really is, the clouds follow live weather, and tapping an aircraft tells you exactly where to look to see it with your own eyes.",
+    sections: [
+      {
+        heading: "Why I built it",
+        body: [
+          "I'm a plane-spotter. Flight trackers tell you what's flying, but not where to look from where you're standing. SQUAWK started as that one feature and grew into a whole live planet.",
+        ],
+      },
+      {
+        heading: "Highlights",
+        bullets: [
+          "Live aircraft from community ADS-B networks, with the feed following the camera as you explore.",
+          "Ground view puts you on the ground looking up at true angles, so the scene matches the sky outside.",
+          "Sun and moon transit prediction, contrail forecasts from upper-air data, and visible satellite passes.",
+          "A sky camera on phones: point it up and every aircraft in range gets a tag where it really is.",
+          "A first-sighting guide, XP, streaks and a collection of aircraft families, with optional sign-in to sync progress.",
+          "Falls back to realistic simulated traffic if no live feed is reachable, so it never shows an empty sky.",
+        ],
+      },
+      {
+        heading: "What it taught me",
+        body: [
+          "Real-time data is never as clean as the docs suggest. Most of the work was in fallbacks, rate limits, coordinate maths and keeping 3D smooth on a phone, which is the same reliability work that AI systems need.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ctrl-automate",
+    callsign: "CTA-04",
+    title: "Ctrl+Automate",
+    tagline:
+      "My blog. Practical Python automation, AI tools and CS guides, with code you can copy.",
+    status: "Live",
+    year: "2026",
+    role: "Writer and builder",
+    stack: ["Next.js", "MDX", "Python", "n8n"],
+    kind: "blog",
+    links: { demo: "https://ctrl-automate.vercel.app" },
+    stats: [
+      { value: "3", label: "topics: Python automation, AI tools, n8n" },
+      { value: "2", label: "free browser tools" },
+    ],
+    summary:
+      "Ctrl+Automate is where I write up what I automate. Each post is a tested, copy-paste guide: sorting a Downloads folder, Telegram alerts for scripts, running Python on a schedule with GitHub Actions, turning raw CSVs into Excel reports.",
+    sections: [
+      {
+        heading: "Why I write",
+        body: [
+          "If something annoys me twice, I automate it. Writing it up properly is how I make sure I understand it, and it saves the next person an afternoon.",
+        ],
+      },
+      {
+        heading: "What's there",
+        bullets: [
+          "Python automation tutorials: files, Excel, scraping, schedules and alerts.",
+          "AI tools, starting with extracting structured data from text with an LLM.",
+          "n8n workflows, including an honest n8n vs Zapier comparison.",
+          "Two small browser tools: a JSON to Pydantic converter and a cron expression explainer.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "personal-automations",
+    callsign: "AUT-05",
+    title: "Life, automated",
+    tagline:
+      "I automate my own stuff. Small pipelines for things that annoyed me: flat-hunting and job-hunting in Dublin.",
+    status: "Running",
+    year: "2026",
+    role: "Personal tools",
+    stack: ["Web scraping", "Scheduled jobs", "Email alerts"],
+    // TODO(Sairaj): confirm the stack and add repo links if public.
+    links: {},
+    stats: [
+      { value: "2", label: "pipelines running on a schedule" },
+      { value: "0", label: "listings refreshed by hand" },
+    ],
+    summary:
+      "Moving to Dublin meant refreshing Daft.ie and job boards all day. So I stopped, and built two small pipelines that do the refreshing for me.",
+    sections: [
+      {
+        heading: "Daft.ie apartment alerts",
+        body: [
+          "Dublin rentals go fast. The pipeline watches for new listings that match my filters and alerts me as soon as they appear, so I'm not the fortieth person to email the landlord.",
+        ],
+      },
+      {
+        heading: "Daily job-alert scraper",
+        body: ["A scraper collects fresh AI and ML roles every day and emails me the new ones."],
+      },
+      {
+        heading: "Why it's here",
+        body: [
+          "These aren't big systems, but they're how I think: if something annoys me twice, I automate it. Most of my projects started that way.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "rainwise",
+    callsign: "RNW-06",
+    title: "RainWise",
+    tagline: "Predicts rainfall, then tells you how much rainwater to store.",
+    status: "Shipped",
+    year: "2024",
+    role: "Undergraduate project, published at ICCCNT 2025",
+    stack: ["Python", "Deep learning", "Flutter"],
+    links: { repo: "https://github.com/SairajBandre16/RainWise" },
+    stats: [{ value: "2025", label: "paper at ICCCNT" }],
+    summary:
+      "A deep learning model trained on Indian weather data predicts rainfall and drives a mobile app that recommends rainwater storage solutions. It took the project from data to model to something a person can act on.",
+    sections: [
+      {
+        heading: "The idea",
+        body: [
+          "Rainwater harvesting works best when you know how much rain is coming. RainWise turns a rainfall forecast into a practical storage recommendation.",
+        ],
+      },
+      {
+        heading: "How it works",
+        bullets: [
+          "A deep learning model trained on Indian weather data predicts rainfall.",
+          "A Flutter mobile app turns the prediction into rainwater storage recommendations.",
+          "The work was published as RainWise: Smart Rainwater Harvesting at ICCCNT 2025.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "chainwatch",
-    callsign: "CHW-02",
+    callsign: "CHW-07",
     title: "ChainWatch",
-    tagline: "An early-warning system for supply-chain disruptions on India to Europe shipping lanes.",
+    tagline:
+      "An early-warning system for supply-chain disruptions on India to Europe shipping lanes.",
     status: "In progress",
     year: "2026",
     role: "Solo research build",
     stack: ["Python", "Ollama", "NetworkX", "LightGBM", "SHAP", "FastAPI", "Streamlit", "GDELT"],
-    builtWithClaudeCode: true,
     links: { repo: "https://github.com/SairajBandre16/ChainWatch" },
     stats: [
       { value: "≥30 days", label: "early warning on the 2023 Red Sea crisis (backtest)" },
@@ -147,7 +368,8 @@ export const projects: Project[] = [
             ["Red Sea crisis", "2023-12-15", "≥ 30 days"],
             ["Quiet control periods", "60 days", "False-alarm rate 0.75"],
           ],
-          caption: "Keyword extractor, 164 GDELT days, 41,937 news items, lane Nhava Sheva to Rotterdam.",
+          caption:
+            "Keyword extractor, 164 GDELT days, 41,937 news items, lane Nhava Sheva to Rotterdam.",
         },
       },
       {
@@ -157,141 +379,6 @@ export const projects: Project[] = [
           "The full LLM backtest didn't finish: a 3B model on a laptop CPU needs around 20 hours for the prefiltered items.",
           "Small LLMs make plain mistakes, like inventing a port code. Guard rails catch the structured errors; free-text summaries can still slip.",
           "Two disruptions is a tiny sample. The backtest illustrates behaviour, not statistical strength.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "squawk",
-    callsign: "SQK-03",
-    title: "SQUAWK",
-    tagline: "The sky above you, live in 3D. A plane-spotting app built from my favourite hobby.",
-    status: "Live",
-    year: "2026",
-    role: "Solo build, design and engineering",
-    stack: ["JavaScript", "Three.js", "WebGL", "ADS-B feeds", "Firebase", "PWA"],
-    builtWithClaudeCode: true,
-    links: { demo: "https://squawk-iota.vercel.app", repo: "https://github.com/SairajBandre16/SQUAWK" },
-    stats: [
-      { value: "5s", label: "live aircraft refresh around you" },
-      { value: "~150", label: "satellites tracked, plus the ISS" },
-      { value: "24", label: "aircraft families to collect" },
-    ],
-    image: { src: "/projects/squawk-wide.jpg", alt: "SQUAWK showing live aircraft over Ireland in 3D" },
-    summary:
-      "Squawk shows every aircraft around you in real time over satellite imagery. The sun sits where it really is, the clouds follow live weather, and tapping an aircraft tells you exactly where to look to see it with your own eyes.",
-    sections: [
-      {
-        heading: "Why I built it",
-        body: [
-          "I'm a plane-spotter. Flight trackers tell you what's flying, but not where to look from where you're standing. Squawk started as that one feature and grew into a whole live planet.",
-        ],
-      },
-      {
-        heading: "Highlights",
-        bullets: [
-          "Live aircraft from community ADS-B networks, with the feed following the camera as you explore.",
-          "Ground view puts you on the ground looking up at true angles, so the scene matches the sky outside.",
-          "Sun and moon transit prediction, contrail forecasts from upper-air data, and visible satellite passes.",
-          "A sky camera on phones: point it up and every aircraft in range gets a tag where it really is.",
-          "A first-sighting guide, XP, streaks and a collection of aircraft families, with optional sign-in to sync progress.",
-          "Falls back to realistic simulated traffic if no live feed is reachable, so it never shows an empty sky.",
-        ],
-      },
-      {
-        heading: "What it taught me",
-        body: [
-          "Real-time data is never as clean as the docs suggest. Most of the work was in fallbacks, rate limits, coordinate maths and keeping 3D smooth on a phone, which is the same reliability work that AI systems need.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "ergode-automation",
-    callsign: "ERG-04",
-    title: "Warehouse automation at Ergode",
-    tagline: "Pipelines and RPA that ran real e-commerce operations every day.",
-    status: "Internal",
-    year: "2025–2026",
-    role: "AI Intern, then Executive, Supply Chain & Automation",
-    stack: ["Python", "Selenium", "PaddleOCR", "n8n", "Google Sheets API", "Gmail API", "Excel", "SQL"],
-    builtWithClaudeCode: false,
-    links: {},
-    stats: [
-      { value: "2", label: "seller portals automated (Walmart DSV, Shein)" },
-      { value: "Daily", label: "used in live operations" },
-      { value: "RPA", label: "where the official API stopped" },
-    ],
-    summary:
-      "Two systems from my time at Ergode, described without company data: an invoice and pallet-tracking pipeline with AI-generated insights, and a returns-processing bot that reads labels and barcodes.",
-    sections: [
-      {
-        heading: "Invoice and pallet-tracking pipeline",
-        body: [
-          "Shipping invoices arrived by email and someone had to copy them into spreadsheets before anyone could see what was going on. I built a pipeline that does it end to end.",
-        ],
-        bullets: [
-          "Pulls invoices from Gmail and writes structured rows into Google Sheets.",
-          "Builds an Excel workbook tracking pallets, shipping variance and shipper performance.",
-          "Adds AI-generated insights on top of the numbers, then sends an HTML email report to the team.",
-        ],
-      },
-      {
-        heading: "Returns-processing RPA",
-        body: [
-          "Returns meant reading labels, scanning barcodes and looking things up by hand. The bot does the repetitive part.",
-        ],
-        bullets: [
-          "Selenium drives the browser workflows step by step, the way a person would.",
-          "Barcode scanning plus OCR with PaddleOCR reads the label details.",
-          "Google Sheets lookups match each return to the right record.",
-        ],
-      },
-      {
-        heading: "What it taught me",
-        bullets: [
-          "Automation that people rely on needs logging, retries and a clear way to see when it failed.",
-          "The hardest integrations are the ones without an API. RPA is a valid tool when it's the only door.",
-          "Turning stakeholder requests into maintainable tools is a skill in itself, and the one I use most in AI work now.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "personal-automations",
-    callsign: "AUT-05",
-    title: "I automate my own life",
-    tagline: "Small pipelines for things that annoyed me: flat-hunting and job-hunting in Dublin.",
-    status: "Running",
-    year: "2026",
-    role: "Personal tools",
-    stack: ["Web scraping", "Scheduled jobs", "Email alerts"],
-    // TODO(Sairaj): confirm stack and whether these were built with Claude Code; add repo links if public.
-    builtWithClaudeCode: false,
-    links: {},
-    stats: [
-      { value: "2", label: "pipelines running on a schedule" },
-      { value: "0", label: "listings refreshed by hand" },
-    ],
-    summary:
-      "Moving to Dublin meant refreshing Daft.ie and job boards all day. So I stopped, and built two small pipelines that do the refreshing for me.",
-    sections: [
-      {
-        heading: "Daft.ie apartment alerts",
-        body: [
-          "Dublin rentals go fast. The pipeline watches for new listings that match my filters and alerts me as soon as they appear, so I'm not the fortieth person to email the landlord.",
-        ],
-      },
-      {
-        heading: "Daily job-alert scraper",
-        body: [
-          "A scraper collects fresh AI and ML roles every day and emails me the new ones.",
-        ],
-      },
-      {
-        heading: "Why it's here",
-        body: [
-          "These aren't big systems, but they're how I think: if something annoys me twice, I automate it. Most of my projects started that way.",
         ],
       },
     ],
@@ -309,21 +396,6 @@ export type ArchiveItem = {
 
 export const archive: ArchiveItem[] = [
   {
-    title: "OwnIt",
-    year: "2026",
-    blurb: "Helps a student understand and rewrite an AI-assisted draft in their own words. Rule-based NLP, no LLMs.",
-    stack: ["FastAPI", "spaCy", "Next.js"],
-    href: "https://github.com/SairajBandre16/ownit",
-  },
-  {
-    title: "RainWise",
-    year: "2024",
-    blurb: "Deep learning rainfall prediction on Indian weather data, delivered in a mobile app for rainwater storage.",
-    stack: ["Flutter", "Python", "Deep learning"],
-    href: "https://github.com/SairajBandre16/RainWise",
-    note: "Paper · ICCCNT 2025",
-  },
-  {
     title: "Scan To Measure",
     year: "2023",
     blurb: "Real-time object size measurement with OpenCV and ArUco markers.",
@@ -332,7 +404,7 @@ export const archive: ArchiveItem[] = [
     note: "Paper · IJRTI 2023",
   },
   {
-    title: "News Summarizer",
+    title: "News Summariser",
     year: "2023",
     blurb: "Full-stack NLP app that summarises news across categories.",
     stack: ["Next.js", "Flask", "NLP"],

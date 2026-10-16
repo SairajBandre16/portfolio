@@ -1,74 +1,98 @@
-import { ArrowUpRight, FileDown } from "lucide-react";
-import { profile, section } from "@/lib/site";
+import { ArrowUp, ArrowUpRight, FileDown, PenLine } from "lucide-react";
+import { profile } from "@/lib/site";
+import { GitHubIcon, LinkedInIcon } from "@/components/ui/icons";
 import { Magnetic } from "@/components/ui/magnetic";
-import { ButtonLink } from "@/components/ui/button-link";
 import { Reveal } from "@/components/ui/reveal";
-import { GitHubIcon, LinkedInIcon, Mark } from "@/components/ui/icons";
+import { SectionLabel } from "@/components/ui/section-label";
 import { LiveClock } from "@/components/hero/live-clock";
 import { CopyEmail } from "./copy-email";
+import { SplitName } from "./split-name";
+
+const links = [
+  { label: "LinkedIn", href: profile.links.linkedin, icon: LinkedInIcon },
+  { label: "GitHub", href: profile.links.github, icon: GitHubIcon },
+  { label: "Blog", href: profile.links.blog, icon: PenLine },
+];
 
 export function Contact() {
-  const s = section("contact");
+  const [first, last] = profile.name.split(" ");
+  const [emailUser, emailDomain] = profile.email.split("@");
   return (
-    <section id="contact" className="relative isolate overflow-hidden border-t border-line">
-      <div
-        aria-hidden
-        className="hairline-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_60%_70%_at_20%_60%,#000_20%,transparent_70%)]"
-      />
-      <div className="container-page pt-24 pb-10 md:pt-36">
-        <Reveal>
-          <p className="hud flex items-center gap-2 text-subtle">
-            <span className="inline-block size-1.5 rounded-full bg-accent" />
-            <span className="text-accent">{s.fl}</span> / Cruise altitude
-          </p>
-          <h2 className="mt-8 max-w-[14ch] text-[clamp(2.75rem,1.5rem+5.5vw,6.5rem)] leading-[0.92] font-medium tracking-[-0.05em] text-fg">
-            Looking for an AI engineer who <em className="font-serif font-normal text-accent">ships?</em>
-          </h2>
-          <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-muted">
-            I&apos;m open to AI, applied AI, ML engineering and data science roles in Dublin or remote.
-            If you have a problem that needs automating, or just want to talk about planes, my inbox is open.
+    <section
+      id="contact"
+      data-scene="contact"
+      className="relative flex min-h-dvh flex-col justify-between pt-28 md:pt-40"
+    >
+      <div className="container-page">
+        <SectionLabel index="06" label="Contact" />
+        <h2 className="headline mt-6 max-w-[11ch] text-[clamp(2.2rem,1rem+4.4vw,5.5rem)]">
+          Let&apos;s build something that <span className="text-signal">thinks.</span>
+        </h2>
+        <Reveal className="mt-10 max-w-[44ch]">
+          <p className="text-muted text-lg leading-relaxed">
+            Hiring for an AI or ML role, got an idea worth automating, or just want to talk planes?
+            My inbox is open.
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} className="mt-10 flex flex-wrap items-center gap-3">
-          <Magnetic>
-            <ButtonLink href={`mailto:${profile.email}`} variant="primary" className="h-12 px-6 text-base">
-              {profile.email} <ArrowUpRight size={16} />
-            </ButtonLink>
-          </Magnetic>
+        <Reveal delay={0.06} className="mt-12">
+          <a
+            href={`mailto:${profile.email}`}
+            className="group font-display text-fg inline-flex max-w-full items-center gap-3 text-[clamp(1.2rem,0.9rem+1.4vw,2.2rem)] font-bold tracking-tight"
+          >
+            {/* Wraps only at the @ on narrow screens, never mid-word. */}
+            <span className="min-w-0 bg-[linear-gradient(var(--accent),var(--accent))] bg-size-[0%_3px] bg-bottom-left bg-no-repeat pb-1 transition-[background-size] duration-500 group-hover:bg-size-[100%_3px]">
+              {emailUser}@<wbr />
+              {emailDomain}
+            </span>
+            <ArrowUpRight className="text-accent size-[0.8em] shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </a>
+        </Reveal>
+
+        <Reveal delay={0.1} className="mt-8 flex flex-wrap items-center gap-3">
           <CopyEmail email={profile.email} />
-          <ButtonLink href={profile.links.resume} download>
-            <FileDown size={16} strokeWidth={1.75} /> Résumé
-          </ButtonLink>
+          {links.map(({ label, href, icon: Icon }) => (
+            <Magnetic key={label}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-line-strong text-fg hover:bg-line inline-flex h-11 items-center gap-2 rounded-full border px-5 text-sm font-medium transition-colors"
+              >
+                <Icon size={15} /> {label}
+              </a>
+            </Magnetic>
+          ))}
+          <a
+            href={profile.links.resume}
+            download
+            className="bg-accent text-ink inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-transform active:scale-[0.97]"
+          >
+            <FileDown size={15} /> Résumé
+          </a>
         </Reveal>
-
-        <Reveal delay={0.12} className="mt-6 flex flex-wrap gap-3">
-          <ButtonLink href={profile.links.linkedin} external variant="ghost" className="px-0 pr-4">
-            <LinkedInIcon size={16} /> LinkedIn
-          </ButtonLink>
-          <ButtonLink href={profile.links.github} external variant="ghost" className="px-0 pr-4">
-            <GitHubIcon size={16} /> GitHub
-          </ButtonLink>
-        </Reveal>
-
-        <footer className="mt-28 flex flex-col gap-6 border-t border-line pt-8 text-sm text-subtle md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3 text-fg">
-            <Mark size={28} />
-            <span className="text-subtle">
-              © 2026 {profile.name}. Built with Next.js and Claude Code.
-            </span>
-          </div>
-          <p className="hud flex flex-wrap gap-x-4 gap-y-1">
-            <span>
-              {profile.location.city} <LiveClock seconds={false} />
-            </span>
-            <span>Squawk 7000 · VFR</span>
-            <a href="#top" className="text-muted hover:text-fg">
-              Back to ground ↑
-            </a>
-          </p>
-        </footer>
       </div>
+
+      <footer data-scene="signoff" className="container-page mt-24 pb-24 md:pb-8">
+        <SplitName first={first} last={last} />
+        <div className="border-line mt-6 flex flex-col gap-6 border-t pt-6 md:flex-row md:items-center md:justify-between">
+          <p className="tag text-subtle">
+            © 2026 {profile.name} · From {profile.location.from.city}, now in{" "}
+            {profile.location.city} · It&apos;s{" "}
+            <span className="text-fg">
+              <LiveClock seconds={false} />
+            </span>{" "}
+            here
+          </p>
+          <a
+            href="#top"
+            className="tag group text-muted hover:text-fg inline-flex items-center gap-2"
+          >
+            Back to the top
+            <ArrowUp size={13} className="transition-transform group-hover:-translate-y-0.5" />
+          </a>
+        </div>
+      </footer>
     </section>
   );
 }
