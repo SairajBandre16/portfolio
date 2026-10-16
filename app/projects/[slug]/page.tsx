@@ -135,14 +135,39 @@ async function CaseStudy({ params }: Pick<PageProps<"/projects/[slug]">, "params
         </p>
       )}
 
-      {p.image && (
-        <figure className="bg-surface relative mt-12 aspect-[16/10] overflow-hidden rounded-[1.4rem]">
-          <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority />
-          <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
+      {p.video ? (
+        <figure className="mt-12">
+          <video
+            controls
+            playsInline
+            preload="none"
+            poster={p.image?.src}
+            aria-label={p.video.label}
+            className="bg-surface aspect-video w-full rounded-[1.4rem] shadow-[inset_0_0_0_1px_var(--line)]"
+          >
+            <source src={p.video.webm} type="video/webm" />
+            <source src={p.video.mp4} type="video/mp4" />
+          </video>
+          <figcaption className="label text-soft mt-3">{p.video.label}</figcaption>
         </figure>
+      ) : (
+        p.image && (
+          <figure className="bg-surface relative mt-12 aspect-[16/10] overflow-hidden rounded-[1.4rem]">
+            <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority />
+            <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
+          </figure>
+        )
       )}
       {p.slug === "squawk" && (
-        <div className="mt-3 grid grid-cols-2 gap-3">
+        <div className="mt-8 grid grid-cols-2 gap-3">
+          <Image
+            src="/projects/squawk-wide.jpg"
+            alt="SQUAWK showing live aircraft over Ireland in 3D"
+            width={800}
+            height={500}
+            sizes="(min-width: 768px) 46rem, 100vw"
+            className="col-span-2 w-full rounded-[1.1rem]"
+          />
           <Image
             src="/projects/squawk-orbit.jpg"
             alt="SQUAWK orbit view over Dublin"

@@ -49,6 +49,5 @@ export const clocks = [
 ];
 
 export const footer = {
-  thanks: ["Thanks for", "stopping by."],
-  madeIn: "Made in Dublin by Sairaj Bandre.",
+  signoff: ["Made by", "Sairaj Bandre."],
 };

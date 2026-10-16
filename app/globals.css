@@ -271,36 +271,120 @@ body {
 }
 
 /* ---------- Footer skyline ----------
-   An engraving of Dublin by day; at night (dark theme) the windows light up,
-   the moon and stars come out and the sun goes down. */
+   Mumbai and Dublin as layered silhouettes. By day (light theme) the layers are tones of
+   ink on paper; at night (dark theme) they glow faintly against the dark, windows light
+   up and the moon and stars come out. */
 .skyline {
-  --ink: color-mix(in oklab, var(--fg) 52%, transparent);
+  --far: color-mix(in oklab, var(--fg) 8%, var(--bg));
+  --mid: color-mix(in oklab, var(--fg) 14%, var(--bg));
+  --near: color-mix(in oklab, var(--fg) 22%, var(--bg));
+  --cut: color-mix(in oklab, var(--fg) 36%, var(--bg));
   --window: #ffd08a;
-  color: var(--ink);
 }
-.skyline :is(path, circle, ellipse, rect, line) {
+[data-theme="dark"] .skyline {
+  --far: color-mix(in oklab, var(--fg) 6%, var(--bg));
+  --mid: color-mix(in oklab, var(--fg) 10%, var(--bg));
+  --near: color-mix(in oklab, var(--fg) 15%, var(--bg));
+  --cut: color-mix(in oklab, var(--fg) 3%, var(--bg));
+}
+.skyline .far {
+  fill: var(--far);
+}
+.skyline .reflection {
+  opacity: 0.3;
+}
+[data-theme="dark"] .skyline .reflection {
+  opacity: 0.9;
+}
+.skyline .mid {
+  fill: var(--mid);
+}
+.skyline .near {
+  fill: var(--near);
+}
+.skyline .cut,
+.skyline .pane {
+  fill: var(--cut);
+}
+.skyline .hole {
+  fill: var(--bg);
+}
+.skyline .glass {
+  fill: var(--cut);
+  opacity: 0.5;
+}
+.skyline :is(.cut-line, .cable, .rail, .shore, .shimmer) {
+  fill: none;
   vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+.skyline .cut-line {
+  stroke: var(--cut);
+  stroke-width: 1;
+}
+.skyline .cable {
+  stroke: var(--mid);
+  stroke-width: 0.9;
+}
+.skyline .rail {
+  stroke: var(--near);
+  stroke-width: 1;
+}
+.skyline .shore {
+  stroke: var(--near);
+  stroke-width: 1;
+}
+.skyline .shimmer {
+  stroke: var(--mid);
+  stroke-width: 1;
 }
 .skyline .paint {
   fill: var(--accent);
-  fill-opacity: 0.78;
+  fill-opacity: 0.85;
 }
-.skyline .lit {
-  fill: transparent;
+.skyline .cloud-shape {
+  fill: var(--far);
 }
-.skyline .night,
-.skyline .plane-static {
-  display: none;
+.skyline .sun {
+  fill: var(--accent);
+  fill-opacity: 0.32;
 }
-[data-theme="dark"] .skyline .lit {
+.skyline .sun-glow {
+  fill: var(--accent);
+  fill-opacity: 0.08;
+}
+.skyline .moon {
   fill: var(--window);
-  fill-opacity: 0.82;
+  fill-opacity: 0.9;
+}
+.skyline .star {
+  fill: var(--fg);
+  fill-opacity: 0.7;
+}
+.skyline .glow {
+  fill: var(--window);
+}
+.skyline .beacon {
+  fill: #ff5a3c;
+}
+.skyline .sk-label {
+  fill: var(--soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.skyline .night {
+  display: none;
 }
 [data-theme="dark"] .skyline .night {
   display: inline;
 }
 [data-theme="dark"] .skyline .day {
   display: none;
+}
+[data-theme="dark"] .skyline .pane.lit {
+  fill: var(--window);
+  fill-opacity: 0.85;
 }
 
 @keyframes sky-drift {
@@ -310,7 +394,7 @@ body {
 }
 @keyframes sky-sail {
   to {
-    transform: translateX(1720px);
+    transform: translateX(1760px);
   }
 }
 @keyframes sky-flow {
@@ -318,47 +402,24 @@ body {
     transform: translateX(-1440px);
   }
 }
-@keyframes sky-bob {
-  50% {
-    transform: translateY(-3px);
-  }
-}
 @keyframes sky-twinkle {
   50% {
     opacity: 0.15;
   }
 }
-@keyframes sky-blink {
-  0%,
-  88%,
-  100% {
-    opacity: 0;
-  }
-  92% {
-    opacity: 1;
-  }
-}
 .skyline .cloud {
-  animation: sky-drift var(--t, 200s) linear infinite;
+  animation: sky-drift var(--t, 240s) linear infinite;
   animation-delay: var(--d, 0s);
 }
 .skyline .boat {
-  animation: sky-sail 95s linear infinite;
-  animation-delay: -38s;
+  animation: sky-sail 110s linear infinite;
+  animation-delay: -46s;
 }
 .skyline .flow {
-  animation: sky-flow 70s linear infinite;
-}
-.skyline .bob {
-  animation: sky-bob 3.2s ease-in-out infinite;
-  animation-delay: var(--d, 0s);
+  animation: sky-flow 80s linear infinite;
 }
 .skyline .twinkle {
   animation: sky-twinkle 3.6s ease-in-out infinite;
-  animation-delay: var(--d, 0s);
-}
-.skyline .blink {
-  animation: sky-blink 1.6s linear infinite;
   animation-delay: var(--d, 0s);
 }
 
@@ -406,14 +467,8 @@ body {
       display: none;
     }
   }
-  .skyline :is(.cloud, .boat, .flow, .bob, .twinkle, .blink) {
+  .skyline :is(.cloud, .boat, .flow, .twinkle) {
     animation: none !important;
-  }
-  .skyline .plane-flying {
-    display: none;
-  }
-  .skyline .plane-static {
-    display: inline;
   }
   .row-preview {
     display: none;

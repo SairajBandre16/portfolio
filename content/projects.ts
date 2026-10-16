@@ -33,6 +33,8 @@ export type Project = {
    * "cover" fills the card edge to edge.
    */
   image?: { src: string; alt: string; width: number; height: number; frame: "window" | "cover" };
+  /** A short film, shown on the case study and played on hover in the gallery. */
+  video?: { webm: string; mp4: string; label: string };
   sections: Section[];
 };
 
@@ -211,11 +213,16 @@ export const projects: Project[] = [
     ],
     tint: "#f26a21",
     image: {
-      src: "/projects/squawk-wide.jpg",
-      alt: "SQUAWK showing live aircraft over Ireland in 3D",
-      width: 800,
-      height: 500,
+      src: "/projects/squawk-poster.jpg",
+      alt: "SQUAWK title card: the sky above you, live in 3D",
+      width: 1600,
+      height: 900,
       frame: "cover",
+    },
+    video: {
+      webm: "/projects/squawk-intro.webm",
+      mp4: "/projects/squawk-intro.mp4",
+      label: "SQUAWK intro film",
     },
     summary:
       "SQUAWK shows every aircraft around you in real time over satellite imagery. The sun sits where it really is, the clouds follow live weather, and tapping an aircraft tells you exactly where to look to see it with your own eyes.",

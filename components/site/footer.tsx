@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { footer } from "@/content/home";
 import { profile } from "@/lib/site";
-import { DublinSkyline } from "./dublin-skyline";
+import { Skyline } from "./skyline";
 
 const links = [
   { label: "Email", href: `mailto:${profile.email}` },
@@ -15,13 +15,10 @@ export function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden pt-20 sm:pt-28">
       <div className="gutter flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-[clamp(2.5rem,1.2rem+4.2vw,5.5rem)] leading-[0.95] text-balance font-[600] tracking-[-0.032em] [font-stretch:90%]">
-            <span className="text-fg">{footer.thanks[0]}</span>{" "}
-            <span className="text-soft">{footer.thanks[1]}</span>
-          </p>
-          <p className="text-soft mt-3">{footer.madeIn}</p>
-        </div>
+        <p className="text-[clamp(2.5rem,1.2rem+4.2vw,5.5rem)] leading-[0.95] font-[600] tracking-[-0.032em] text-balance [font-stretch:90%]">
+          <span className="text-soft">{footer.signoff[0]}</span>{" "}
+          <span className="text-fg">{footer.signoff[1]}</span>
+        </p>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
           {links.map((l) => (
             <li key={l.label}>
@@ -42,7 +39,7 @@ export function Footer() {
           ))}
         </ul>
       </div>
-      <DublinSkyline className="mt-10 sm:mt-6" />
+      <Skyline className="mt-10 sm:mt-4" />
     </footer>
   );
 }

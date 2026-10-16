@@ -1,5 +1,10 @@
 # Progress
 
+## 2026-10-16: SQUAWK film, Mumbai + Dublin skyline, new logo
+- SQUAWK intro film and poster (from the SQUAWK repo's `assets/promo`) are in `public/projects/`. The poster is SQUAWK's screen everywhere; the film plays on hover in the gallery (nothing downloads until then) and with controls on the case study.
+- Footer now just says "Made by Sairaj Bandre." over a combined Mumbai and Dublin waterfront drawn as layered silhouettes, with day and night versions.
+- New "S." logo for the favicon, SVG icon and Apple touch icon.
+
 ## 2026-10-16: shorter intro, richer footer
 - Intro trimmed: no QueryForge sentence, no papers clause, "MSc student at UCD". Punctuation and hyphenated words no longer wrap on their own.
 - Sign-off "Thanks for stopping by." now set large in two-tone Bricolage Grotesque; Instrument Serif dropped.

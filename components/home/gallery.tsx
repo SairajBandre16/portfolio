@@ -2,6 +2,7 @@ import Link from "next/link";
 import { gallery } from "@/content/home";
 import { getProject, type Project } from "@/content/projects";
 import { Shot } from "@/components/site/shot";
+import { HoverFilm } from "@/components/site/hover-film";
 
 type Item = { p: Project; caption: string };
 
@@ -9,7 +10,9 @@ function Card({ p, caption, copy, index }: Item & { copy?: boolean; index: numbe
   return (
     <li>
       <Link href={`/projects/${p.slug}`} className="group block">
-        <span className="bg-surface relative block aspect-[5/4] overflow-hidden rounded-[1.35rem]">
+        <span
+          className={`bg-surface relative block overflow-hidden rounded-[1.35rem] ${p.video ? "aspect-video" : "aspect-[5/4]"}`}
+        >
           <Shot
             project={p}
             sizes="(min-width: 1024px) 30vw, 78vw"
@@ -17,6 +20,7 @@ function Card({ p, caption, copy, index }: Item & { copy?: boolean; index: numbe
             eager
             className="transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.035]"
           />
+          {!copy && <HoverFilm project={p} />}
           <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
         </span>
         <span className="mt-3 flex items-baseline justify-between gap-3 px-1">
