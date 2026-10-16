@@ -32,3 +32,15 @@ Sairaj found v1 (flight deck) too safe: familiar layout, default-looking fonts, 
 - three.js is dynamically imported after first paint (separate ~136 KB gzip chunk). Particle count scales with screen size and CPU cores. The canvas pauses when the tab is hidden.
 - `prefers-reduced-motion`: no Lenis, no drift, instant morphs (a static frame per scene), no plane flights, static text.
 - No WebGL: the canvas is simply skipped; the page is complete without it.
+
+## Direction v3: "Quiet" (2026-10-16)
+
+Sairaj found v2 cluttered and not lively enough, and pointed at adiarya.vercel.app as the feel he wants. What that site does well: the whole introduction is one paragraph that reads at two speeds (bold for the headline facts, grey for the detail), small app-icon tiles sit inline in the sentence, a column of project screens drifts past on the right, and a hand-drawn city closes the page. We took the idea, not the layout code, copy or assets.
+
+- **One paragraph intro.** Strong and soft runs of text, inline project icons (QueryForge, SQUAWK) that pop a screenshot preview on hover, a highlighted link to the papers, and LinkedIn / GitHub / email tiles. Sentences settle in one after another (opacity and blur; transforms do not apply to inline text).
+- **Drifting gallery.** Desktop: a full-height column of project screens that moves upwards forever and pauses under the pointer, with an inert second copy for a seamless loop. Phones and tablets: a swipeable row. Reduced motion: a plain scrollable column.
+- **Departures-board clock.** Split-flap cells for DUB and the time, flipping as they change; the dropdown adds Mumbai, home.
+- **Quiet index under the fold.** Work, Experience, Papers, Recently on GitHub, Writing and Toolbox as plain rows with one shared label column. Hovering a list dims the other rows; work rows carry their screenshot along with the cursor.
+- **Dublin skyline footer.** A generated line drawing along the Liffey (Poolbeg chimneys, Convention Centre, Samuel Beckett Bridge, Custom House, Liberty Hall, the Spire, Ha'penny Bridge, a Georgian terrace with painted doors), with a plane gliding along a dashed approach path.
+- **Type and colour.** Bricolage Grotesque for everything, Instrument Serif italic for the sign-off, Martian Mono for small labels. Warm paper and warm ink, one accent: aviation orange.
+- **Removed.** The three.js particle field, scene colours, nav pill, command menu, scroll progress, plane-spotting easter egg, Lenis and the learning path section (and its roadmap data). Dependencies dropped: three, lenis, motion, simple-icons.

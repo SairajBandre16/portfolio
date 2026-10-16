@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense, ViewTransition } from "react";
+import { Suspense } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { getProject, projects, type Section } from "@/content/projects";
-import { StatusPill } from "@/components/projects/status-pill";
-import { GitHubIcon } from "@/components/ui/icons";
-import { Breakable } from "@/components/ui/breakable";
-import { Reveal } from "@/components/ui/reveal";
+import { TopBar } from "@/components/site/top-bar";
+import { ProjectMark } from "@/components/site/project-mark";
+import { Shot } from "@/components/site/shot";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -28,51 +27,46 @@ export async function generateMetadata({
   };
 }
 
-function SectionBlock({ s, index }: { s: Section; index: number }) {
+function SectionBlock({ s }: { s: Section }) {
   return (
-    <Reveal className="border-line grid gap-4 border-t py-12 md:grid-cols-12 md:gap-8">
-      <div className="md:col-span-4">
-        <p className="font-dot text-accent text-3xl font-black">
-          {String(index + 1).padStart(2, "0")}
-        </p>
-        <h2 className="font-display text-h3 text-fg mt-3 leading-tight font-bold tracking-tight">
-          {s.heading}
-        </h2>
-      </div>
-      <div className="text-muted space-y-5 text-lg leading-relaxed md:col-span-8">
+    <section className="mt-14">
+      <h2 className="text-fg text-xl font-semibold tracking-[-0.01em]">{s.heading}</h2>
+      <div className="text-fg/80 mt-4 space-y-4 text-[1.05rem] leading-relaxed">
         {s.body?.map((b) => (
           <p key={b}>{b}</p>
         ))}
         {s.bullets && (
           <ul className="space-y-3">
             {s.bullets.map((b) => (
-              <li key={b} className="grid grid-cols-[1.25rem_1fr] gap-3">
-                <span aria-hidden className="bg-accent mt-[0.6em] size-2 rounded-full" />
+              <li key={b} className="grid grid-cols-[1.1rem_1fr] gap-2">
+                <span aria-hidden className="bg-accent mt-[0.68em] size-1.5 rounded-full" />
                 <span>{b}</span>
               </li>
             ))}
           </ul>
         )}
         {s.table && (
-          <figure className="panel overflow-x-auto rounded-2xl">
-            <table className="w-full text-left text-base">
-              <thead className="tag text-subtle">
+          <figure className="overflow-x-auto">
+            <table className="w-full text-left text-[0.95rem]">
+              <thead>
                 <tr className="border-line border-b">
                   {s.table.head.map((h) => (
-                    <th key={h} scope="col" className="px-5 py-3 font-normal">
+                    <th key={h} scope="col" className="label text-soft py-2.5 pr-4 font-normal">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-line divide-y">
+              <tbody>
                 {s.table.rows.map((row) => (
-                  <tr key={row.join()}>
+                  <tr key={row.join()} className="border-line border-b">
                     {row.map((cell, i) => (
                       <td
                         key={i}
                         className={
-                          i === row.length - 1 ? "text-fg px-5 py-3 font-mono" : "px-5 py-3"
+                          i === row.length - 1
+                            ? "text-fg py-2.5 font-mono text-sm tabular-nums"
+                            : "py-2.5 pr-4"
                         }
                       >
                         {cell}
@@ -83,16 +77,17 @@ function SectionBlock({ s, index }: { s: Section; index: number }) {
               </tbody>
             </table>
             {s.table.caption && (
-              <figcaption className="border-line text-subtle border-t px-5 py-3 text-sm">
-                {s.table.caption}
-              </figcaption>
+              <figcaption className="text-soft mt-3 text-sm">{s.table.caption}</figcaption>
             )}
           </figure>
         )}
       </div>
-    </Reveal>
+    </section>
   );
 }
+
+const textLink =
+  "group text-fg inline-flex items-center gap-1 font-medium underline decoration-[color-mix(in_oklab,var(--fg)_30%,transparent)] underline-offset-[0.25em] transition-[text-decoration-color] hover:decoration-[var(--accent)]";
 
 async function CaseStudy({ params }: Pick<PageProps<"/projects/[slug]">, "params">) {
   const { slug } = await params;
@@ -104,188 +99,144 @@ async function CaseStudy({ params }: Pick<PageProps<"/projects/[slug]">, "params
   const prev = projects[(i - 1 + projects.length) % projects.length];
 
   return (
-    <article data-scene={p.slug}>
-      <header className="container-page flex min-h-dvh flex-col pt-28 pb-12 sm:pt-32">
+    <article className="max-w-[46rem] pt-10 sm:pt-16">
+      <p className="label text-soft flex flex-wrap items-center gap-x-2.5 gap-y-1">
+        <span>{p.year}</span>
+        <span aria-hidden>·</span>
+        <span className="inline-flex items-center gap-1.5">
+          {p.status === "In progress" && <span className="bg-accent size-1.5 rounded-full" />}
+          {p.status}
+        </span>
+        <span aria-hidden>·</span>
+        <span>{p.role}</span>
+      </p>
+      <h1 className="text-fg mt-5 flex items-center gap-[0.3em] text-[clamp(2.4rem,1.6rem+3vw,4rem)] leading-[1.02] font-semibold tracking-[-0.035em]">
+        <ProjectMark project={p} className="text-[0.75em]" />
+        {p.title}
+      </h1>
+      <p className="text-intro text-soft mt-5 leading-[1.4] tracking-[-0.012em] text-pretty">
+        {p.tagline}
+      </p>
+
+      {(p.links.demo || p.links.repo) && (
+        <p className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
+          {p.links.demo && (
+            <a href={p.links.demo} target="_blank" rel="noopener noreferrer" className={textLink}>
+              {p.kind === "blog" ? "Read the blog" : "Live demo"}
+              <ArrowUpRight size={15} aria-hidden />
+            </a>
+          )}
+          {p.links.repo && (
+            <a href={p.links.repo} target="_blank" rel="noopener noreferrer" className={textLink}>
+              Source on GitHub
+              <ArrowUpRight size={15} aria-hidden />
+            </a>
+          )}
+        </p>
+      )}
+
+      {p.image && (
+        <figure className="bg-surface relative mt-12 aspect-[16/10] overflow-hidden rounded-[1.4rem]">
+          <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority />
+          <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
+        </figure>
+      )}
+      {p.slug === "squawk" && (
+        <div className="mt-3 grid grid-cols-2 gap-3">
+          <Image
+            src="/projects/squawk-orbit.jpg"
+            alt="SQUAWK orbit view over Dublin"
+            width={764}
+            height={868}
+            sizes="(min-width: 768px) 23rem, 50vw"
+            className="w-full rounded-[1.1rem]"
+          />
+          <Image
+            src="/projects/squawk-ground.jpg"
+            alt="SQUAWK ground view looking up at aircraft"
+            width={764}
+            height={868}
+            sizes="(min-width: 768px) 23rem, 50vw"
+            className="w-full rounded-[1.1rem]"
+          />
+        </div>
+      )}
+
+      <dl className="border-line mt-12 grid gap-6 border-y py-7 sm:grid-cols-3">
+        {p.stats.map((s) => (
+          <div key={s.label} className="flex flex-col-reverse justify-end">
+            <dt className="text-soft mt-1.5 text-sm leading-snug">{s.label}</dt>
+            <dd className="text-fg text-[1.9rem] leading-none font-semibold tracking-[-0.03em] tabular-nums">
+              {s.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <p className="text-fg mt-12 text-[1.25rem] leading-[1.5] tracking-[-0.01em] text-pretty">
+        {p.summary}
+      </p>
+      <p className="mt-6 flex flex-wrap gap-x-1.5 gap-y-1 text-sm">
+        <span className="text-soft">Built with</span>
+        {p.stack.map((t, idx) => (
+          <span key={t} className="text-fg/85">
+            {t}
+            {idx < p.stack.length - 1 && <span className="text-soft">,</span>}
+          </span>
+        ))}
+      </p>
+
+      {p.sections.map((s) => (
+        <SectionBlock key={s.heading} s={s} />
+      ))}
+
+      <nav aria-label="More projects" className="border-line mt-20 grid border-t sm:grid-cols-2">
         <Link
-          href="/#work"
-          className="group text-muted hover:text-fg inline-flex w-fit items-center gap-2 text-sm"
+          href={`/projects/${prev.slug}`}
+          className="group border-line flex flex-col gap-1 border-b py-6 sm:border-r sm:border-b-0 sm:pr-6"
         >
-          <ArrowLeft size={15} className="transition-transform group-hover:-translate-x-0.5" /> All
-          projects
-        </Link>
-
-        <div className="my-auto max-w-[44rem] py-12">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="font-dot text-accent mr-1 text-2xl font-black">{p.callsign}</span>
-            <StatusPill status={p.status} />
-          </div>
-          <ViewTransition name={`project-title-${p.slug}`}>
-            <h1 className="headline mt-6 text-[clamp(2.2rem,1.2rem+4vw,5.25rem)]">
-              <Breakable text={p.title} />
-            </h1>
-          </ViewTransition>
-          <p className="text-muted mt-6 max-w-[44ch] text-xl leading-relaxed">{p.tagline}</p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            {p.links.demo && (
-              <a
-                href={p.links.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-accent text-ink inline-flex h-12 items-center gap-2 rounded-full px-6 font-semibold transition-transform active:scale-[0.97]"
-              >
-                {p.kind === "blog" ? "Read the blog" : "Live demo"} <ArrowUpRight size={16} />
-              </a>
-            )}
-            {p.links.repo && (
-              <a
-                href={p.links.repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-line-strong text-fg hover:bg-line inline-flex h-12 items-center gap-2 rounded-full border px-6 font-medium transition-colors"
-              >
-                <GitHubIcon size={15} /> Source
-              </a>
-            )}
-          </div>
-        </div>
-
-        <dl className="border-line grid gap-6 border-t pt-6 sm:grid-cols-3">
-          {p.stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse">
-              <dt className="text-subtle mt-2 text-sm">{s.label}</dt>
-              <dd className="font-display text-fg text-[clamp(1.6rem,1.1rem+1.4vw,2.5rem)] leading-none font-extrabold tracking-tight tabular-nums">
-                {s.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </header>
-
-      <div className="container-page pb-24">
-        <div className="border-line grid gap-10 border-t pt-12 md:grid-cols-12">
-          <Reveal className="md:col-span-8">
-            <p className="font-display text-fg text-[clamp(1.25rem,1rem+0.9vw,1.8rem)] leading-snug font-semibold tracking-tight">
-              {p.summary}
-            </p>
-          </Reveal>
-          <dl className="grid content-start gap-6 md:col-span-4">
-            <div>
-              <dt className="tag text-subtle">Role</dt>
-              <dd className="text-fg mt-1">{p.role}</dd>
-            </div>
-            <div>
-              <dt className="tag text-subtle">Year</dt>
-              <dd className="text-fg mt-1 font-mono">{p.year}</dd>
-            </div>
-            <div>
-              <dt className="tag text-subtle">Stack</dt>
-              <dd className="mt-2 flex flex-wrap gap-1.5">
-                {p.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="border-line text-muted rounded-full border px-2.5 py-1 text-xs"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        {p.slug === "squawk" && p.image && (
-          <div className="mt-16 grid gap-4 md:grid-cols-[2fr_1fr_1fr]">
-            <Image
-              src={p.image.src}
-              alt={p.image.alt}
-              width={800}
-              height={500}
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="border-line h-full w-full rounded-[1.5rem] border object-cover"
-            />
-            <Image
-              src="/projects/squawk-orbit.jpg"
-              alt="SQUAWK orbit view over Dublin"
-              width={764}
-              height={868}
-              sizes="(min-width: 768px) 25vw, 100vw"
-              className="border-line w-full rounded-[1.5rem] border"
-            />
-            <Image
-              src="/projects/squawk-ground.jpg"
-              alt="SQUAWK ground view looking up at aircraft"
-              width={764}
-              height={868}
-              sizes="(min-width: 768px) 25vw, 100vw"
-              className="border-line w-full rounded-[1.5rem] border"
-            />
-          </div>
-        )}
-
-        <div className="mt-16">
-          {p.sections.map((s, idx) => (
-            <SectionBlock key={s.heading} s={s} index={idx} />
-          ))}
-        </div>
-
-        <nav
-          aria-label="More projects"
-          className="mt-16 grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]"
-        >
-          <Link
-            href={`/projects/${prev.slug}`}
-            className="panel group hover:border-accent/60 flex items-center gap-5 rounded-[2rem] p-7 transition-colors md:p-9"
-          >
+          <span className="label text-soft inline-flex items-center gap-1.5">
             <ArrowLeft
-              size={22}
-              className="text-muted group-hover:text-accent shrink-0 transition-transform group-hover:-translate-x-1"
+              size={13}
+              className="transition-transform duration-300 group-hover:-translate-x-0.5"
             />
-            <span className="min-w-0">
-              <span className="tag text-subtle">Previous · {prev.callsign}</span>
-              <span className="headline group-hover:text-accent mt-3 block text-[clamp(1.4rem,5vw,2.25rem)]">
-                <Breakable text={prev.title} />
-              </span>
-            </span>
-          </Link>
-          <Link
-            href={`/projects/${next.slug}`}
-            className="panel group hover:border-accent/60 flex items-center justify-between gap-6 rounded-[2rem] p-7 transition-colors md:p-10"
-          >
-            <span className="min-w-0">
-              <span className="tag text-subtle">
-                Next project · {next.callsign} ·{" "}
-                {String(((i + 1) % projects.length) + 1).padStart(2, "0")}/
-                {String(projects.length).padStart(2, "0")}
-              </span>
-              <span className="headline group-hover:text-accent mt-3 block text-[clamp(1.6rem,1rem+2.6vw,3rem)]">
-                <Breakable text={next.title} />
-              </span>
-            </span>
+            Previous
+          </span>
+          <span className="text-fg text-lg font-medium">{prev.title}</span>
+        </Link>
+        <Link
+          href={`/projects/${next.slug}`}
+          className="group flex flex-col items-end gap-1 py-6 text-right sm:pl-6"
+        >
+          <span className="label text-soft inline-flex items-center gap-1.5">
+            Next
             <ArrowRight
-              size={28}
-              className="text-muted group-hover:text-accent shrink-0 transition-transform group-hover:translate-x-1"
+              size={13}
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
             />
-          </Link>
-        </nav>
-      </div>
+          </span>
+          <span className="text-fg text-lg font-medium">{next.title}</span>
+        </Link>
+      </nav>
     </article>
   );
 }
 
 function CaseStudySkeleton() {
   return (
-    <div className="container-page pt-32 pb-24" aria-busy="true">
-      <div className="skeleton h-4 w-28" />
-      <div className="skeleton mt-24 h-20 w-2/3" />
-      <div className="skeleton mt-6 h-6 w-1/2" />
-      <div className="skeleton mt-24 h-24 w-full rounded-[1.75rem]" />
+    <div className="max-w-[46rem] pt-16" aria-busy="true">
+      <div className="bg-surface h-3 w-40 animate-pulse rounded" />
+      <div className="bg-surface mt-6 h-14 w-2/3 animate-pulse rounded-lg" />
+      <div className="bg-surface mt-6 h-6 w-full animate-pulse rounded" />
+      <div className="bg-surface mt-12 aspect-[16/10] w-full animate-pulse rounded-[1.4rem]" />
     </div>
   );
 }
 
 export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
-    <main id="main">
+    <main id="main" className="gutter">
+      <TopBar back />
       <Suspense fallback={<CaseStudySkeleton />}>
         <CaseStudy params={params} />
       </Suspense>

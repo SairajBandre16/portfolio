@@ -26,7 +26,13 @@ export type Project = {
   links: { demo?: string; repo?: string };
   stats: Stat[];
   summary: string;
-  image?: { src: string; alt: string };
+  /** Brand colour of the project itself, used for its chip and gallery card. */
+  tint: string;
+  /**
+   * Screenshot for the gallery and case study. "window" frames a website screenshot,
+   * "cover" fills the card edge to edge.
+   */
+  image?: { src: string; alt: string; width: number; height: number; frame: "window" | "cover" };
   sections: Section[];
 };
 
@@ -56,6 +62,14 @@ export const projects: Project[] = [
       { value: "1,034", label: "benchmark questions, no hand labels" },
       { value: "3B", label: "parameter model on a laptop GPU" },
     ],
+    tint: "#c6ec4a",
+    image: {
+      src: "/projects/queryforge.jpg",
+      alt: "QueryForge home page: ask a database in plain English, get SQL that was run and checked",
+      width: 1200,
+      height: 750,
+      frame: "window",
+    },
     summary:
       "Give it a question and a database. It writes SQL, runs it against the database, reads the error or the result, and corrects itself when something goes wrong. Evaluated on the Spider benchmark by execution accuracy, with every component measured by ablation.",
     sections: [
@@ -138,6 +152,14 @@ export const projects: Project[] = [
       { value: "0", label: "AI models or external APIs" },
       { value: "3", label: "desktop platforms: Windows, macOS, Linux" },
     ],
+    tint: "#e8541c",
+    image: {
+      src: "/projects/ownit.jpg",
+      alt: "OwnIt home page: humanise it, understand it, own it",
+      width: 1200,
+      height: 750,
+      frame: "window",
+    },
     summary:
       "OwnIt takes a draft written with AI and walks a student through making it theirs: humanise it, understand it, rewrite the generic parts in their own words, prove they understand it, then export. Every suggestion is rule-based and explained.",
     sections: [
@@ -187,9 +209,13 @@ export const projects: Project[] = [
       { value: "~150", label: "satellites tracked, plus the ISS" },
       { value: "24", label: "aircraft families to collect" },
     ],
+    tint: "#f26a21",
     image: {
       src: "/projects/squawk-wide.jpg",
       alt: "SQUAWK showing live aircraft over Ireland in 3D",
+      width: 800,
+      height: 500,
+      frame: "cover",
     },
     summary:
       "SQUAWK shows every aircraft around you in real time over satellite imagery. The sun sits where it really is, the clouds follow live weather, and tapping an aircraft tells you exactly where to look to see it with your own eyes.",
@@ -235,6 +261,14 @@ export const projects: Project[] = [
       { value: "3", label: "topics: Python automation, AI tools, n8n" },
       { value: "2", label: "free browser tools" },
     ],
+    tint: "#2f6bf2",
+    image: {
+      src: "/projects/ctrl-automate.jpg",
+      alt: "Ctrl+Automate blog home page: automate the boring stuff, ship the fun stuff",
+      width: 1200,
+      height: 750,
+      frame: "window",
+    },
     summary:
       "Ctrl+Automate is where I write up what I automate. Each post is a tested, copy-paste guide: sorting a Downloads folder, Telegram alerts for scripts, running Python on a schedule with GitHub Actions, turning raw CSVs into Excel reports.",
     sections: [
@@ -271,6 +305,7 @@ export const projects: Project[] = [
       { value: "2", label: "pipelines running on a schedule" },
       { value: "0", label: "listings refreshed by hand" },
     ],
+    tint: "#e3b341",
     summary:
       "Moving to Dublin meant refreshing Daft.ie and job boards all day. So I stopped, and built two small pipelines that do the refreshing for me.",
     sections: [
@@ -303,6 +338,7 @@ export const projects: Project[] = [
     stack: ["Python", "Deep learning", "Flutter"],
     links: { repo: "https://github.com/SairajBandre16/RainWise" },
     stats: [{ value: "2025", label: "paper at ICCCNT" }],
+    tint: "#3aa0d8",
     summary:
       "A deep learning model trained on Indian weather data predicts rainfall and drives a mobile app that recommends rainwater storage solutions. It took the project from data to model to something a person can act on.",
     sections: [
@@ -338,6 +374,7 @@ export const projects: Project[] = [
       { value: "0.776", label: "ROC AUC, late-delivery model" },
       { value: "119", label: "offline tests" },
     ],
+    tint: "#2bb39a",
     summary:
       "ChainWatch reads global news, extracts disruption events with an LLM, maps them onto a trade-lane graph of ports and chokepoints, adds a delay-risk model with SHAP explanations, and has an agent write a grounded mitigation brief. It's where my supply-chain background meets AI.",
     sections: [

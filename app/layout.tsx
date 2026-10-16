@@ -1,31 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Doto, Martian_Mono, Syne } from "next/font/google";
-import { Providers } from "@/components/shell/providers";
-import { SmoothScroll } from "@/components/shell/smooth-scroll";
-import { ScrollProgress } from "@/components/shell/scroll-progress";
-import { PlaneSpotter } from "@/components/shell/plane-spotter";
-import { ParticleField } from "@/components/signal/particle-field";
-import { SceneDirector } from "@/components/signal/scene-director";
-import { Nav } from "@/components/shell/nav";
-import { CommandMenu } from "@/components/shell/command-menu";
-import { projects } from "@/content/projects";
+import { Bricolage_Grotesque, Instrument_Serif, Martian_Mono } from "next/font/google";
+import { Providers } from "@/components/site/providers";
+import { Footer } from "@/components/site/footer";
 import { profile, siteDescription, siteTitle, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-// Variable, so the hero can pair a regular greeting with an extra-bold name.
-const syne = Syne({ variable: "--font-syne", subsets: ["latin"] });
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
   axes: ["opsz", "wdth"],
 });
-const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], preload: false });
-const doto = Doto({
-  variable: "--font-doto",
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
-  weight: ["700", "900"],
+  weight: "400",
+  style: "italic",
   preload: false,
 });
+const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], preload: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -58,8 +50,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0f" },
-    { media: "(prefers-color-scheme: light)", color: "#f1eee6" },
+    { media: "(prefers-color-scheme: dark)", color: "#121210" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f2ec" },
   ],
 };
 
@@ -86,20 +78,12 @@ const personJsonLd = {
   sameAs: [profile.links.github, profile.links.linkedin],
 };
 
-const commandProjects = projects.map(({ slug, title, tagline, callsign }) => ({
-  slug,
-  title,
-  tagline,
-  callsign,
-}));
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
       suppressHydrationWarning
-      data-scene="core"
-      className={`${syne.variable} ${bricolage.variable} ${martian.variable} ${doto.variable} antialiased`}
+      className={`${bricolage.variable} ${instrument.variable} ${martian.variable} antialiased`}
     >
       <body className="min-h-dvh">
         <script
@@ -111,18 +95,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Providers>
           <a
             href="#main"
-            className="bg-accent text-ink fixed top-3 left-3 z-[80] -translate-y-20 rounded-full px-4 py-2 text-sm font-medium transition-transform focus:translate-y-0"
+            className="bg-fg text-bg fixed top-3 left-3 z-50 -translate-y-20 rounded-full px-4 py-2 text-sm font-medium transition-transform focus:translate-y-0"
           >
             Skip to content
           </a>
-          <ScrollProgress />
-          <Nav />
-          <SmoothScroll />
-          <SceneDirector />
-          <ParticleField />
-          <PlaneSpotter />
-          <CommandMenu projects={commandProjects} />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

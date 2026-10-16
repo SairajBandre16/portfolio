@@ -1,5 +1,12 @@
 # Progress
 
+## 2026-10-16: v3 "Quiet" redesign
+- Rebuilt the home page around a single paragraph intro with inline project icons, hover previews and social tiles, beside a drifting column of project screens (swipeable row on phones). See `docs/design-notes.md`.
+- Removed the learning path section and its roadmap data, the particle field, nav, command menu, scroll progress and plane-spotter. Dropped three, lenis, motion and simple-icons.
+- New: departures-board clock (Dublin, Mumbai), sliding theme switch, quiet index (work, experience, papers, GitHub, writing, toolbox) with hover dimming and cursor-following screenshots, Dublin skyline footer with a plane on approach.
+- Case studies and the 404 page restyled to match. Screenshots of QueryForge, OwnIt and Ctrl+Automate captured from the live sites into `public/projects/`.
+- Checked at 375, 768, 1280, 1536 and 1920 px in dark and light, with reduced motion and keyboard only. No horizontal scroll, no console errors.
+
 ## 2026-10-09: type scale + hero story
 - **Hero 3D tells one story now: an invoice chore, automated.** Hand-filled invoices drift in from the left, tilted and scribbled on; the neural core reads each one; it leaves as a clean row in a spreadsheet. When six rows are in, a check lands, the sheet clears and the next batch starts (12 s loop). Invoices and rows share one cycle clock in the shader (new `feed` and `write` flow modes), so they stay in step. HUD captions: Manual · AI · Automated. Reduced motion shows one frozen mid-batch frame.
 - **Hero copy**: "Hi, I'm" in regular weight with only **Sairaj.** in extra-bold (Syne now loads as a variable font); the line under it is regular weight. Looser line height, so nothing collides when the headline wraps.
