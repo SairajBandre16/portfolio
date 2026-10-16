@@ -1,5 +1,10 @@
 # Progress
 
+## 2026-10-16: QueryForge and OwnIt films
+- QueryForge (0:21) and OwnIt (0:37) intro films and title cards come from each repo's `video/` folder. In the drifting gallery, both cards now show the title card, play the film on hover (like SQUAWK) and carry a small runtime badge. Each case study opens with its film (title card as poster, with sound) and keeps the website screenshot underneath.
+- Re-encoded the films to 720p with standard-range colour. The original Remotion `.webm` files used full-range colour and failed with a decode error in Chrome. The SQUAWK `.mp4` fallback dropped from 12 MB to 6 MB.
+- A full hero redesign (a "Now showing" film player with tabs and a nav bar) was tried and dropped: Sairaj prefers the existing look.
+
 ## 2026-10-16: footer balance
 - Footer reads "Thanks for stopping by." with "Made by Sairaj Bandre." under it.
 - Skyline split exactly in half at the sun/moon: Mumbai on the left, Dublin on the right. Dublin gained a Georgian terrace with painted doors, Liberty Hall, Docklands offices and a taller Beckett Bridge and Poolbeg chimneys; Christ Church and the Four Courts moved forward. The Convention Centre and Aviva were dropped to keep it uncluttered.

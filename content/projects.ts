@@ -26,15 +26,18 @@ export type Project = {
   links: { demo?: string; repo?: string };
   stats: Stat[];
   summary: string;
-  /** Brand colour of the project itself, used for its chip and gallery card. */
+  /** Brand colour of the project itself, used for its chip and the work list. */
   tint: string;
   /**
-   * Screenshot for the gallery and case study. "window" frames a website screenshot,
+   * Screenshot for previews and the case study. "window" frames a website screenshot,
    * "cover" fills the card edge to edge.
    */
   image?: { src: string; alt: string; width: number; height: number; frame: "window" | "cover" };
-  /** A short film, shown on the case study and played on hover in the gallery. */
-  video?: { webm: string; mp4: string; label: string };
+  /**
+   * A short intro film with sound: shown in the home page player, in the work list preview
+   * and on the case study. `poster` is its title card; `seconds` is its running time.
+   */
+  video?: { webm: string; mp4: string; poster: string; seconds: number; label: string };
   sections: Section[];
 };
 
@@ -71,6 +74,13 @@ export const projects: Project[] = [
       width: 1200,
       height: 750,
       frame: "window",
+    },
+    video: {
+      webm: "/projects/queryforge-intro.webm",
+      mp4: "/projects/queryforge-intro.mp4",
+      poster: "/projects/queryforge-poster.jpg",
+      seconds: 21,
+      label: "QueryForge intro film",
     },
     summary:
       "Give it a question and a database. It writes SQL, runs it against the database, reads the error or the result, and corrects itself when something goes wrong. Evaluated on the Spider benchmark by execution accuracy, with every component measured by ablation.",
@@ -162,6 +172,13 @@ export const projects: Project[] = [
       height: 750,
       frame: "window",
     },
+    video: {
+      webm: "/projects/ownit-intro.webm",
+      mp4: "/projects/ownit-intro.mp4",
+      poster: "/projects/ownit-poster.jpg",
+      seconds: 37,
+      label: "OwnIt intro film",
+    },
     summary:
       "OwnIt takes a draft written with AI and walks a student through making it theirs: humanise it, understand it, rewrite the generic parts in their own words, prove they understand it, then export. Every suggestion is rule-based and explained.",
     sections: [
@@ -222,6 +239,8 @@ export const projects: Project[] = [
     video: {
       webm: "/projects/squawk-intro.webm",
       mp4: "/projects/squawk-intro.mp4",
+      poster: "/projects/squawk-poster.jpg",
+      seconds: 29,
       label: "SQUAWK intro film",
     },
     summary:

@@ -8,6 +8,7 @@ import { getProject, projects, type Section } from "@/content/projects";
 import { TopBar } from "@/components/site/top-bar";
 import { ProjectMark } from "@/components/site/project-mark";
 import { Shot } from "@/components/site/shot";
+import { runtime } from "@/lib/utils";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -141,23 +142,28 @@ async function CaseStudy({ params }: Pick<PageProps<"/projects/[slug]">, "params
             controls
             playsInline
             preload="none"
-            poster={p.image?.src}
+            poster={p.video.poster}
             aria-label={p.video.label}
             className="bg-surface aspect-video w-full rounded-[1.4rem] shadow-[inset_0_0_0_1px_var(--line)]"
           >
             <source src={p.video.webm} type="video/webm" />
             <source src={p.video.mp4} type="video/mp4" />
           </video>
-          <figcaption className="label text-soft mt-3">{p.video.label}</figcaption>
+          <figcaption className="label text-soft mt-3">
+            {p.video.label} · {runtime(p.video.seconds)}, with sound
+          </figcaption>
         </figure>
-      ) : (
+      ) : null}
+      {/* Website screenshots sit under the film, or stand alone when there is none. */}
+      {(!p.video || p.image?.frame === "window") &&
         p.image && (
-          <figure className="bg-surface relative mt-12 aspect-[16/10] overflow-hidden rounded-[1.4rem]">
-            <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority />
+          <figure
+            className={`bg-surface relative aspect-[16/10] overflow-hidden rounded-[1.4rem] ${p.video ? "mt-8" : "mt-12"}`}
+          >
+            <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority={!p.video} />
             <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
           </figure>
-        )
-      )}
+        )}
       {p.slug === "squawk" && (
         <div className="mt-8 grid grid-cols-2 gap-3">
           <Image
