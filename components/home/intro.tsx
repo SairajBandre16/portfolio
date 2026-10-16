@@ -26,7 +26,7 @@ function ProjectChip({ slug }: { slug: string }) {
           className="chip-preview bg-surface block rounded-[1.1rem] p-1.5 text-left whitespace-normal shadow-[0_24px_50px_-18px_rgb(var(--shadow)/0.45),inset_0_0_0_1px_var(--line)]"
         >
           <span className="relative block aspect-[16/10] overflow-hidden rounded-[0.8rem]">
-            <Shot project={p} sizes="(min-width: 1024px) 30vw, 78vw" />
+            <Shot project={p} sizes="(min-width: 1024px) 30vw, 78vw" eager />
           </span>
           <span className="text-soft block px-2 pt-2 pb-1 text-[0.8rem] leading-snug font-normal tracking-normal">
             {p.tagline}
@@ -68,23 +68,57 @@ function Socials() {
   );
 }
 
+/** Keeps hyphenated words such as "e-commerce" on one line. */
+function Words({ text }: { text: string }) {
+  return text.split(/(\S+-\S+)/).map((chunk, i) =>
+    i % 2 ? (
+      <span key={i} className="whitespace-nowrap">
+        {chunk}
+      </span>
+    ) : (
+      chunk
+    ),
+  );
+}
+
 function Part({ part }: { part: IntroPart }) {
   switch (part.kind) {
     case "strong":
-      return <span className={strong}>{part.text}</span>;
+      return (
+        <span className={strong}>
+          <Words text={part.text} />
+        </span>
+      );
     case "soft":
-      return <span className={soft}>{part.text}</span>;
+      return (
+        <span className={soft}>
+          <Words text={part.text} />
+        </span>
+      );
     case "project":
       return <ProjectChip slug={part.slug} />;
-    case "mark":
-      return (
-        <a href={part.href} className={`mark ${strong}`}>
-          {part.text}
-        </a>
-      );
     case "socials":
       return <Socials />;
   }
+}
+
+/** Renders a sentence, keeping punctuation glued to an icon chip right before it. */
+function Sentence({ parts }: { parts: IntroPart[] }) {
+  return parts.map((part, j) => {
+    const prev = parts[j - 1];
+    const next = parts[j + 1];
+    const glued = (p?: IntroPart) => p?.kind === "strong" && /^[.,]$/.test(p.text);
+    if (part.kind === "project" && glued(next)) {
+      return (
+        <span key={j} className="whitespace-nowrap">
+          <Part part={part} />
+          <Part part={next} />
+        </span>
+      );
+    }
+    if (prev?.kind === "project" && glued(part)) return null;
+    return <Part key={j} part={part} />;
+  });
 }
 
 const underline =
@@ -108,12 +142,10 @@ export function Intro() {
         {rest.map((sentence, i) => (
           <span
             key={i}
-            className="settle inline"
+            className={`settle inline ${sentence.some((p) => p.kind === "socials") ? "whitespace-nowrap" : ""}`}
             style={{ "--i": i + 1 } as React.CSSProperties}
           >
-            {sentence.map((part, j) => (
-              <Part key={j} part={part} />
-            ))}{" "}
+            <Sentence parts={sentence} />{" "}
           </span>
         ))}
       </div>

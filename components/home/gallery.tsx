@@ -14,6 +14,7 @@ function Card({ p, caption, copy, index }: Item & { copy?: boolean; index: numbe
             project={p}
             sizes="(min-width: 1024px) 30vw, 78vw"
             priority={!copy && index === 0}
+            eager
             className="transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.035]"
           />
           <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />

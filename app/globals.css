@@ -13,7 +13,6 @@
   --faint: #a29f96;
   --line: rgb(26 25 22 / 0.1);
   --accent: #c2410c;
-  --mark: rgb(234 88 12 / 0.16);
   --shadow: 60 44 20;
   color-scheme: light;
 }
@@ -27,7 +26,6 @@
   --faint: #55534d;
   --line: rgb(239 237 230 / 0.08);
   --accent: #ff8a4c;
-  --mark: rgb(255 138 76 / 0.2);
   --shadow: 0 0 0;
   color-scheme: dark;
 }
@@ -41,10 +39,8 @@
   --color-faint: var(--faint);
   --color-line: var(--line);
   --color-accent: var(--accent);
-  --color-mark: var(--mark);
 
   --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
   --font-mono: var(--font-martian), ui-monospace, monospace;
 
   --text-intro: clamp(1.45rem, 1.05rem + 1.25vw, 2.05rem);
@@ -154,20 +150,6 @@ body {
     translate: -50% 0;
     scale: 1;
   }
-}
-
-.mark {
-  background: var(--mark);
-  border-radius: 0.3em;
-  padding: 0.02em 0.22em;
-  margin-inline: -0.04em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  transition: background-color 0.3s ease;
-}
-.mark:hover,
-.mark:focus-visible {
-  background: color-mix(in oklab, var(--accent) 34%, transparent);
 }
 
 /* Sentences settle in one after another. */
@@ -288,19 +270,96 @@ body {
   animation-delay: calc(var(--i, 0) * 45ms);
 }
 
-/* ---------- Footer skyline ---------- */
+/* ---------- Footer skyline ----------
+   An engraving of Dublin by day; at night (dark theme) the windows light up,
+   the moon and stars come out and the sun goes down. */
 .skyline {
-  color: color-mix(in oklab, var(--fg) 46%, transparent);
+  --ink: color-mix(in oklab, var(--fg) 52%, transparent);
+  --window: #ffd08a;
+  color: var(--ink);
 }
-.skyline :is(path, circle, ellipse) {
+.skyline :is(path, circle, ellipse, rect, line) {
   vector-effect: non-scaling-stroke;
 }
+.skyline .paint {
+  fill: var(--accent);
+  fill-opacity: 0.78;
+}
+.skyline .lit {
+  fill: transparent;
+}
+.skyline .night,
 .skyline .plane-static {
   display: none;
 }
-.skyline-bands {
-  fill: var(--accent);
-  fill-opacity: 0.75;
+[data-theme="dark"] .skyline .lit {
+  fill: var(--window);
+  fill-opacity: 0.82;
+}
+[data-theme="dark"] .skyline .night {
+  display: inline;
+}
+[data-theme="dark"] .skyline .day {
+  display: none;
+}
+
+@keyframes sky-drift {
+  to {
+    transform: translateX(-1900px);
+  }
+}
+@keyframes sky-sail {
+  to {
+    transform: translateX(1720px);
+  }
+}
+@keyframes sky-flow {
+  to {
+    transform: translateX(-1440px);
+  }
+}
+@keyframes sky-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes sky-twinkle {
+  50% {
+    opacity: 0.15;
+  }
+}
+@keyframes sky-blink {
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+  }
+  92% {
+    opacity: 1;
+  }
+}
+.skyline .cloud {
+  animation: sky-drift var(--t, 200s) linear infinite;
+  animation-delay: var(--d, 0s);
+}
+.skyline .boat {
+  animation: sky-sail 95s linear infinite;
+  animation-delay: -38s;
+}
+.skyline .flow {
+  animation: sky-flow 70s linear infinite;
+}
+.skyline .bob {
+  animation: sky-bob 3.2s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.skyline .twinkle {
+  animation: sky-twinkle 3.6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.skyline .blink {
+  animation: sky-blink 1.6s linear infinite;
+  animation-delay: var(--d, 0s);
 }
 
 /* ---------- Work list hover preview ---------- */
@@ -346,6 +405,9 @@ body {
     .gallery-copy {
       display: none;
     }
+  }
+  .skyline :is(.cloud, .boat, .flow, .bob, .twinkle, .blink) {
+    animation: none !important;
   }
   .skyline .plane-flying {
     display: none;

@@ -16,8 +16,9 @@ export function Footer() {
     <footer id="contact" className="relative overflow-hidden pt-20 sm:pt-28">
       <div className="gutter flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-fg font-serif text-[clamp(2.1rem,1.3rem+2.6vw,3.6rem)] leading-none italic">
-            {footer.thanks}
+          <p className="text-[clamp(2.5rem,1.2rem+4.2vw,5.5rem)] leading-[0.95] text-balance font-[600] tracking-[-0.032em] [font-stretch:90%]">
+            <span className="text-fg">{footer.thanks[0]}</span>{" "}
+            <span className="text-soft">{footer.thanks[1]}</span>
           </p>
           <p className="text-soft mt-3">{footer.madeIn}</p>
         </div>

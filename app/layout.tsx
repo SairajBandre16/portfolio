@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Instrument_Serif, Martian_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Martian_Mono } from "next/font/google";
 import { Providers } from "@/components/site/providers";
 import { Footer } from "@/components/site/footer";
 import { profile, siteDescription, siteTitle, siteUrl } from "@/lib/site";
@@ -9,13 +9,6 @@ const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
   axes: ["opsz", "wdth"],
-});
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  preload: false,
 });
 const martian = Martian_Mono({ variable: "--font-martian", subsets: ["latin"], preload: false });
 
@@ -83,7 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`${bricolage.variable} ${instrument.variable} ${martian.variable} antialiased`}
+      className={`${bricolage.variable} ${martian.variable} antialiased`}
     >
       <body className="min-h-dvh">
         <script

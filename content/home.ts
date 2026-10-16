@@ -6,29 +6,21 @@ export type IntroPart =
   | { kind: "soft"; text: string }
   /** A project name with its icon; hovering shows a preview of the project. */
   | { kind: "project"; slug: string }
-  /** Highlighted link. */
-  | { kind: "mark"; text: string; href: string }
   | { kind: "socials" };
 
 export const intro: IntroPart[][] = [
   [
     { kind: "strong", text: "Hi, I’m Sairaj Bandre." },
-    { kind: "soft", text: " An MSc student at UCD in Dublin, " },
+    { kind: "soft", text: " MSc student at UCD, " },
     { kind: "strong", text: "learning AI by building real things with Claude Code." },
   ],
   [
-    { kind: "strong", text: "Right now I’m building " },
-    { kind: "project", slug: "queryforge" },
-    { kind: "soft", text: ", a text-to-SQL agent that checks and fixes its own queries." },
-  ],
-  [
     { kind: "strong", text: "Before this, I automated e-commerce operations at Ergode " },
-    { kind: "soft", text: "with RPA bots and n8n agents that teams used every day." },
+    { kind: "soft", text: "with RPA bots and n8n agents." },
   ],
   [
-    { kind: "strong", text: "I’ve published " },
-    { kind: "mark", text: "two research papers", href: "#papers" },
-    { kind: "soft", text: ", and I spend far too long on Flightradar, so I built " },
+    { kind: "strong", text: "I spend far too long on Flightradar, " },
+    { kind: "soft", text: "so I built " },
     { kind: "project", slug: "squawk" },
     { kind: "strong", text: "." },
   ],
@@ -57,6 +49,6 @@ export const clocks = [
 ];
 
 export const footer = {
-  thanks: "Thanks for stopping by.",
+  thanks: ["Thanks for", "stopping by."],
   madeIn: "Made in Dublin by Sairaj Bandre.",
 };

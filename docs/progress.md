@@ -1,5 +1,10 @@
 # Progress
 
+## 2026-10-16: shorter intro, richer footer
+- Intro trimmed: no QueryForge sentence, no papers clause, "MSc student at UCD". Punctuation and hyphenated words no longer wrap on their own.
+- Sign-off "Thanks for stopping by." now set large in two-tone Bricolage Grotesque; Instrument Serif dropped.
+- Skyline rebuilt as an engraving with depth, reflection, day/night and gentle motion (see design notes). Reduced motion freezes clouds, boat, water, gulls and lights, and parks the plane.
+
 ## 2026-10-16: v3 "Quiet" redesign
 - Rebuilt the home page around a single paragraph intro with inline project icons, hover previews and social tiles, beside a drifting column of project screens (swipeable row on phones). See `docs/design-notes.md`.
 - Removed the learning path section and its roadmap data, the particle field, nav, command menu, scroll progress and plane-spotter. Dropped three, lenis, motion and simple-icons.

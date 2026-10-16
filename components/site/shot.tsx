@@ -11,13 +11,17 @@ export function Shot({
   project,
   sizes,
   priority,
+  eager,
   className,
 }: {
   project: Project;
   sizes: string;
   priority?: boolean;
+  /** Load straight away, for screens that are visible on first paint. */
+  eager?: boolean;
   className?: string;
 }) {
+  const loading = eager && !priority ? "eager" : undefined;
   const img = project.image;
   if (!img) return null;
 
@@ -29,6 +33,7 @@ export function Shot({
         fill
         sizes={sizes}
         priority={priority}
+        loading={loading}
         className={cn("object-cover", className)}
       />
     );
@@ -46,6 +51,7 @@ export function Shot({
         height={img.height}
         sizes={sizes}
         priority={priority}
+        loading={loading}
         className="absolute top-[11%] left-[9%] h-auto w-[118%] max-w-none rounded-[0.55rem] shadow-[0_24px_48px_-20px_rgb(var(--shadow)/0.55),0_0_0_1px_rgb(0_0_0/0.06)]"
       />
     </div>
