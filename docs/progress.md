@@ -1,5 +1,10 @@
 # Progress
 
+## 2026-10-17: mini player and film previews
+- Hero: "See everything" button removed. In its place, a small record player plays Sade's "Smooth Operator" through Spotify's iFrame API. Nothing loads until the pointer comes near it; the Spotify frame stays hidden and the record, equaliser and progress line show the state. Logged-out visitors hear Spotify's 30-second preview; people signed in to Spotify in that browser hear the full song. Browsers block autoplay with sound, so it starts on a press.
+- Contact line now reads "Building your AI team?".
+- Work list: hovering QueryForge, OwnIt or SQUAWK shows the title card and plays the muted film, instead of the website screenshot.
+
 ## 2026-10-16: QueryForge and OwnIt films
 - QueryForge (0:21) and OwnIt (0:37) intro films and title cards come from each repo's `video/` folder. In the drifting gallery, both cards now show the title card, play the film on hover (like SQUAWK) and carry a small runtime badge. Each case study opens with its film (title card as poster, with sound) and keeps the website screenshot underneath.
 - Re-encoded the films to 720p with standard-range colour. The original Remotion `.webm` files used full-range colour and failed with a decode error in Chrome. The SQUAWK `.mp4` fallback dropped from 12 MB to 6 MB.

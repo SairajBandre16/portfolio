@@ -1,12 +1,40 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/content/projects";
 import { ProjectMark } from "@/components/site/project-mark";
 import { Shot } from "@/components/site/shot";
 import { cn } from "@/lib/utils";
+
+/** A muted film for the row preview: it plays only while its row is under the pointer. */
+function PreviewFilm({ video, active }: { video: NonNullable<Project["video"]>; active: boolean }) {
+  const el = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = el.current;
+    if (!v) return;
+    if (active) {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    } else v.pause();
+  }, [active]);
+  return (
+    <video
+      ref={el}
+      muted
+      loop
+      playsInline
+      preload="none"
+      tabIndex={-1}
+      className="absolute inset-0 h-full w-full object-cover"
+    >
+      <source src={video.webm} type="video/webm" />
+      <source src={video.mp4} type="video/mp4" />
+    </video>
+  );
+}
 
 /**
  * Every project as one quiet row. On devices with a mouse, the row under the pointer brings
@@ -63,7 +91,10 @@ export function WorkList({ projects }: { projects: Project[] }) {
         className="[&:hover>li:not(:hover)]:opacity-45"
       >
         {projects.map((p) => (
-          <li key={p.slug} className="border-line border-b transition-opacity duration-300 last:border-b-0">
+          <li
+            key={p.slug}
+            className="border-line border-b transition-opacity duration-300 last:border-b-0"
+          >
             <Link
               href={`/projects/${p.slug}`}
               onPointerEnter={(e) => enter(p, e)}
@@ -109,7 +140,21 @@ export function WorkList({ projects }: { projects: Project[] }) {
                   p.slug === active ? "opacity-100" : "opacity-0",
                 )}
               >
-                <Shot project={p} sizes="(min-width: 1024px) 30vw, 78vw" />
+                {p.video ? (
+                  // Projects with a film show its title card, then the film itself.
+                  <>
+                    <Image
+                      src={p.video.poster}
+                      alt=""
+                      fill
+                      sizes="22rem"
+                      className="object-cover"
+                    />
+                    <PreviewFilm video={p.video} active={p.slug === active} />
+                  </>
+                ) : (
+                  <Shot project={p} sizes="(min-width: 1024px) 30vw, 78vw" />
+                )}
               </div>
             ))}
         </div>

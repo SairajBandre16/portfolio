@@ -1,8 +1,8 @@
-import { ArrowDown } from "lucide-react";
 import { TopBar } from "@/components/site/top-bar";
 import { profile } from "@/lib/site";
 import { Intro } from "./intro";
 import { Gallery } from "./gallery";
+import { MusicPlayer } from "./music-player";
 
 const coords = `${Math.abs(profile.location.lat).toFixed(2)}° N, ${Math.abs(profile.location.lon).toFixed(2)}° W`;
 
@@ -15,21 +15,11 @@ export function Hero() {
         <div className="flex flex-1 flex-col justify-center pt-10 pb-12 sm:pt-16 lg:py-8">
           <Intro />
         </div>
-        <div className="hidden items-center justify-between pb-7 lg:flex">
-          <a
-            href="#work"
-            className="group bg-surface text-fg hover:bg-surface-2 inline-flex h-10 items-center gap-2 rounded-full pr-4 pl-1.5 text-sm font-medium shadow-[inset_0_0_0_1px_var(--line)] transition-colors"
-          >
-            <span className="bg-fg text-bg grid size-7 place-items-center rounded-full">
-              <ArrowDown
-                size={14}
-                strokeWidth={2.2}
-                className="transition-transform duration-500 group-hover:translate-y-0.5"
-              />
-            </span>
-            See everything
-          </a>
-          <p className="label text-soft">
+        <div className="flex items-center justify-between gap-4 pb-7">
+          <div className="settle" style={{ "--i": 6 } as React.CSSProperties}>
+            <MusicPlayer />
+          </div>
+          <p className="label text-soft hidden lg:block">
             {coords} · {profile.location.city}
           </p>
         </div>

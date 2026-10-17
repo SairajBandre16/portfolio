@@ -28,10 +28,19 @@ export const intro: IntroPart[][] = [
 ];
 
 export const cta = {
-  lead: "Hiring for an AI or ML role?",
+  lead: "Building your AI team?",
   talk: "Let’s talk",
   or: " or ",
   resume: "grab my résumé",
+};
+
+/** The record on the hero's mini player. Audio streams from Spotify's embed. */
+export const song = {
+  title: "Smooth Operator",
+  artist: "Sade",
+  note: "On repeat",
+  spotifyUri: "spotify:track:1Hv1VTm8zeOeybub15mA2R",
+  url: "https://open.spotify.com/track/1Hv1VTm8zeOeybub15mA2R",
 };
 
 /** Cards in the scrolling gallery beside the intro, in order. */
