@@ -12,7 +12,7 @@ export const intro: IntroPart[][] = [
   [
     { kind: "strong", text: "Hi, I’m Sairaj Bandre." },
     { kind: "soft", text: " MSc student at UCD, " },
-    { kind: "strong", text: "learning AI by building real things with Claude Code." },
+    { kind: "strong", text: "deep diving into AI to build real-world products using Claude." },
   ],
   [
     { kind: "strong", text: "Before this, I automated e-commerce operations at Ergode " },

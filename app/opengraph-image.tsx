@@ -30,7 +30,7 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", flexWrap: "wrap", fontSize: 58, lineHeight: 1.3, letterSpacing: -1.5 }}>
           <span style={{ fontWeight: 700 }}>Hi, I’m Sairaj Bandre.&nbsp;</span>
           <span style={{ color: soft }}>An MSc student at UCD in Dublin,&nbsp;</span>
-          <span style={{ fontWeight: 700 }}>learning AI by building real things with Claude Code.</span>
+          <span style={{ fontWeight: 700 }}>deep diving into AI to build real-world products using Claude.</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 24, color: soft }}>
           <div style={{ width: 14, height: 14, borderRadius: 7, background: accent }} />
