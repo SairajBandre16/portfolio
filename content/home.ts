@@ -1,5 +1,6 @@
 // Copy for the home page intro. Each inner array is one sentence; the page renders
 // "strong" parts in full colour and "soft" parts in grey, so the story reads at two speeds.
+// A no-break space ( ) keeps a lone "I" from hanging at the end of a line.
 
 export type IntroPart =
   | { kind: "strong"; text: string }
@@ -15,11 +16,11 @@ export const intro: IntroPart[][] = [
     { kind: "strong", text: "deep diving into AI and building real-world products using Claude." },
   ],
   [
-    { kind: "strong", text: "Before this, I automated e-commerce operations at Ergode " },
+    { kind: "strong", text: "Before this, I automated e-commerce operations at Ergode " },
     { kind: "soft", text: "with RPA bots and n8n agents." },
   ],
   [
-    { kind: "strong", text: "I spend far too long on Flightradar, " },
+    { kind: "strong", text: "I spend far too long on Flightradar, " },
     { kind: "soft", text: "so I built " },
     { kind: "project", slug: "squawk" },
     { kind: "strong", text: "." },
