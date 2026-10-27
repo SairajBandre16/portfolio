@@ -1,9 +1,19 @@
-import { CloudRain, Database, PenLine, Plane, Ship, Terminal, Workflow } from "lucide-react";
+import {
+  CloudRain,
+  Database,
+  PenLine,
+  Plane,
+  ScanSearch,
+  Ship,
+  Terminal,
+  Workflow,
+} from "lucide-react";
 import type { Project } from "@/content/projects";
 import { cn } from "@/lib/utils";
 
 const icons: Record<string, typeof Plane> = {
   queryforge: Database,
+  tacticlens: ScanSearch,
   ownit: PenLine,
   squawk: Plane,
   "ctrl-automate": Terminal,
@@ -13,7 +23,7 @@ const icons: Record<string, typeof Plane> = {
 };
 
 // Light tints get dark ink, everything else white.
-const darkInk = new Set(["queryforge", "personal-automations"]);
+const darkInk = new Set(["queryforge", "tacticlens", "personal-automations"]);
 
 /** A project's little app icon: its brand colour with a glyph. Sized in em to sit in text. */
 export function ProjectMark({ project, className }: { project: Project; className?: string }) {

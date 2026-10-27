@@ -155,41 +155,27 @@ async function CaseStudy({ params }: Pick<PageProps<"/projects/[slug]">, "params
         </figure>
       ) : null}
       {/* Website screenshots sit under the film, or stand alone when there is none. */}
-      {(!p.video || p.image?.frame === "window") &&
-        p.image && (
-          <figure
-            className={`bg-surface relative aspect-[16/10] overflow-hidden rounded-[1.4rem] ${p.video ? "mt-8" : "mt-12"}`}
-          >
-            <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority={!p.video} />
-            <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
-          </figure>
-        )}
-      {p.slug === "squawk" && (
+      {(!p.video || p.image?.frame === "window") && p.image && (
+        <figure
+          className={`bg-surface relative aspect-[16/10] overflow-hidden rounded-[1.4rem] ${p.video ? "mt-8" : "mt-12"}`}
+        >
+          <Shot project={p} sizes="(min-width: 768px) 46rem, 100vw" priority={!p.video} />
+          <span className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[inset_0_0_0_1px_var(--line)]" />
+        </figure>
+      )}
+      {p.screens && (
         <div className="mt-8 grid grid-cols-2 gap-3">
-          <Image
-            src="/projects/squawk-wide.jpg"
-            alt="SQUAWK showing live aircraft over Ireland in 3D"
-            width={800}
-            height={500}
-            sizes="(min-width: 768px) 46rem, 100vw"
-            className="col-span-2 w-full rounded-[1.1rem]"
-          />
-          <Image
-            src="/projects/squawk-orbit.jpg"
-            alt="SQUAWK orbit view over Dublin"
-            width={764}
-            height={868}
-            sizes="(min-width: 768px) 23rem, 50vw"
-            className="w-full rounded-[1.1rem]"
-          />
-          <Image
-            src="/projects/squawk-ground.jpg"
-            alt="SQUAWK ground view looking up at aircraft"
-            width={764}
-            height={868}
-            sizes="(min-width: 768px) 23rem, 50vw"
-            className="w-full rounded-[1.1rem]"
-          />
+          {p.screens.map((s) => (
+            <Image
+              key={s.src}
+              src={s.src}
+              alt={s.alt}
+              width={s.width}
+              height={s.height}
+              sizes={s.wide ? "(min-width: 768px) 46rem, 100vw" : "(min-width: 768px) 23rem, 50vw"}
+              className={`w-full rounded-[1.1rem] ${s.wide ? "col-span-2" : ""}`}
+            />
+          ))}
         </div>
       )}
 

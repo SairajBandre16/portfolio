@@ -47,6 +47,7 @@ export const song = {
 /** Cards in the scrolling gallery beside the intro, in order. */
 export const gallery = [
   { slug: "queryforge", caption: "Text-to-SQL agent" },
+  { slug: "tacticlens", caption: "Verified match stories" },
   { slug: "squawk", caption: "Live plane-spotting in 3D" },
   { slug: "ownit", caption: "Own your AI draft" },
   { slug: "ctrl-automate", caption: "Automation blog" },

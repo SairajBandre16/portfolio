@@ -38,6 +38,8 @@ export type Project = {
    * and on the case study. `poster` is its title card; `seconds` is its running time.
    */
   video?: { webm: string; mp4: string; poster: string; seconds: number; label: string };
+  /** More screens for the case study, two to a row. A "wide" screen takes a row of its own. */
+  screens?: { src: string; alt: string; width: number; height: number; wide?: boolean }[];
   sections: Section[];
 };
 
@@ -133,6 +135,141 @@ export const projects: Project[] = [
         heading: "Use it on your own data",
         body: [
           "The same pipeline works on any SQLite database or CSV and Excel files: from the web app, from Python, from the command line, or as an MCP server for Claude Desktop and Cursor. Everything stays read-only.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "tacticlens",
+    callsign: "TCL-08",
+    title: "TacticLens",
+    tagline:
+      "Football match stories written by AI agents, where every number is checked before a fan sees it.",
+    status: "Live",
+    year: "2026",
+    role: "Hackathon build, simulator to Azure deployment",
+    stack: [
+      "Python",
+      "FastAPI",
+      "scikit-learn",
+      "Microsoft Agent Framework",
+      "Microsoft Foundry",
+      "Azure AI Speech",
+      "Azure AI Content Safety",
+      "Cosmos DB",
+      "Azure Container Apps",
+      "Bicep",
+      "JavaScript",
+      "SVG",
+    ],
+    links: {
+      demo: "https://ca-tacticlens-bwdo4r22di23o.ambitiousocean-8d1c2333.francecentral.azurecontainerapps.io",
+      repo: "https://github.com/SairajBandre16/tacticlens",
+    },
+    stats: [
+      { value: "100%", label: "of 1,448 shipped numbers backed by cited evidence" },
+      { value: "8 / 8", label: "injected fault classes caught by the verifier" },
+      { value: "3", label: "languages, four viewer personas and audio description" },
+    ],
+    tint: "#9ad468",
+    image: {
+      src: "/projects/tacticlens.jpg",
+      alt: "TacticLens Match Center: a 3–2 late comeback on the pitch, with verified moment cards citing their evidence",
+      width: 1200,
+      height: 675,
+      frame: "window",
+    },
+    video: {
+      webm: "/projects/tacticlens-intro.webm",
+      mp4: "/projects/tacticlens-intro.mp4",
+      poster: "/projects/tacticlens-poster.jpg",
+      seconds: 109,
+      label: "TacticLens demo film",
+    },
+    screens: [
+      {
+        src: "/projects/tacticlens-stats.jpg",
+        alt: "Match stats, the key moments timeline and a win-probability chart for the whole match",
+        width: 1600,
+        height: 900,
+        wide: true,
+      },
+      {
+        src: "/projects/tacticlens-compare.jpg",
+        alt: "Compare view: an analyst in English beside a beginner in Hindi, with the English source and a back-translation check",
+        width: 764,
+        height: 1019,
+      },
+      {
+        src: "/projects/tacticlens-trace.jpg",
+        alt: "Agent trace with the Explainer killed: three rejected attempts, then the verified template fallback",
+        width: 764,
+        height: 1019,
+      },
+      {
+        src: "/projects/tacticlens-what-if.jpg",
+        alt: "What if the 88th-minute goal had not gone in: the win chance falls by 86.5 points across 200 rollouts",
+        width: 764,
+        height: 720,
+      },
+      {
+        src: "/projects/tacticlens-mobile.jpg",
+        alt: "TacticLens on a phone, with an audio description player under each moment",
+        width: 764,
+        height: 720,
+      },
+    ],
+    summary:
+      "TacticLens turns a stream of football events into short stories about the moments that mattered, told the way each viewer needs them: numbers for an analyst, the story for a casual fan, the terms explained for a beginner, and an audio description for blind and low-vision fans. AI agents on Microsoft Foundry write every sentence from computed evidence, and a deterministic verifier rejects any number the evidence does not back.",
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "A scoreline doesn't explain a game, and one commentary can't fit every fan. Generative AI can write personalised commentary at scale, but it also invents numbers, and a wrong statistic on a broadcast damages trust.",
+          "So TacticLens only lets the AI write from evidence the system has computed itself, and checks every claim before anyone sees it. All clubs, players and matches are fictional and come from its own simulator.",
+        ],
+      },
+      {
+        heading: "How it works",
+        bullets: [
+          "A possession-chain simulator generates fictional matches with team styles and story beats. It passes 9 of 9 realism checks against real-football ranges.",
+          "Its own xG (logistic regression), expected-threat (value iteration) and win-probability (gradient boosting) models are trained on 3,000 simulated matches.",
+          "A moment detector ranks goals, big chances, red cards, momentum shifts, press collapses and substitution effects, and builds an evidence pack for each.",
+          "A Microsoft Agent Framework workflow runs Spotter, EvidenceBuilder, Explainer, Verifier, TemplateFallback, Localizer, AccessibilityDescriber and SafetyGate. Only the Explainer and Localizer are LLM agents; the rest is plain code, so it's cheap and repeatable.",
+          "The Explainer returns JSON sentences that each list their evidence ids. A rejected draft goes back with the verifier's notes up to twice, then a verified template takes over.",
+          'A counterfactual engine answers "what if?" by replaying the rest of the match 200 times with one change, and reports the change in win chance with an 80% interval.',
+        ],
+      },
+      {
+        heading: "Results",
+        table: {
+          head: ["What", "Result"],
+          rows: [
+            ["Shipped sentences citing valid evidence", "100% (763 / 763)"],
+            ["Shipped numbers backed by cited evidence", "100% (1,448 / 1,448)"],
+            ["First drafts that passed the verifier", "77.8%"],
+            ["Verifier catch rate on injected faults", "100%, 8 classes"],
+            ["xG model on held-out shots", "ROC AUC 0.838"],
+            ["Win-probability log loss (base rates 1.062)", "0.650"],
+          ],
+          caption:
+            "From the repo's evaluation docs. CI regenerates these numbers and fails if they drift.",
+        },
+      },
+      {
+        heading: "Built for every fan",
+        bullets: [
+          "Four viewer personas: analyst, casual, beginner and audio description.",
+          "English, Hindi and Spanish, with the English source and a back-translation check beside every translation.",
+          "Audio descriptions from Azure AI Speech, ARIA live captions, full keyboard control, reduced motion and right-to-left layouts.",
+          "Broadcasters get the same stories as overlay cue JSON, ready for on-screen graphics.",
+        ],
+      },
+      {
+        heading: "Designed around failure",
+        body: [
+          "The Agent trace tab logs every handoff, retry and fallback, and has a switch that kills the Explainer on purpose, so you can watch the retries and the verified fallback happen live.",
+          "Golden mode precomputes the outputs for six demo matches, so the site keeps working even if an Azure service is down. Every model, Speech and Content Safety call is cached by input hash.",
         ],
       },
     ],
@@ -243,6 +380,27 @@ export const projects: Project[] = [
       seconds: 29,
       label: "SQUAWK intro film",
     },
+    screens: [
+      {
+        src: "/projects/squawk-wide.jpg",
+        alt: "SQUAWK showing live aircraft over Ireland in 3D",
+        width: 800,
+        height: 500,
+        wide: true,
+      },
+      {
+        src: "/projects/squawk-orbit.jpg",
+        alt: "SQUAWK orbit view over Dublin",
+        width: 764,
+        height: 868,
+      },
+      {
+        src: "/projects/squawk-ground.jpg",
+        alt: "SQUAWK ground view looking up at aircraft",
+        width: 764,
+        height: 868,
+      },
+    ],
     summary:
       "SQUAWK shows every aircraft around you in real time over satellite imagery. The sun sits where it really is, the clouds follow live weather, and tapping an aircraft tells you exactly where to look to see it with your own eyes.",
     sections: [
