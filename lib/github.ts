@@ -76,10 +76,10 @@ function fromFallback(): RepoFeed {
   };
 }
 
-/** Most recently pushed public repos. Cached for an hour, falls back to a committed snapshot. */
+/** Most recently pushed public repos. Cached for a few minutes, falls back to a committed snapshot. */
 export async function getRecentRepos(): Promise<RepoFeed> {
   "use cache";
-  cacheLife("hours");
+  cacheLife("feed");
 
   const headers: Record<string, string> = {
     Accept: "application/vnd.github+json",

@@ -80,12 +80,7 @@ async function Repos() {
     <>
       <ol className={dimOthers}>
         {repos.map((repo) => (
-          <Row
-            key={repo.name}
-            href={repo.url}
-            external
-            meta={<RelativeTime iso={repo.pushedAt} />}
-          >
+          <Row key={repo.name} href={repo.url} external meta={<RelativeTime iso={repo.pushedAt} />}>
             <span className="text-fg inline-flex items-center gap-2 font-medium">
               <span
                 aria-hidden
@@ -99,9 +94,7 @@ async function Repos() {
               {repo.name}
               <span className="sr-only">, {repo.language ?? "no language"}</span>
             </span>
-            {repo.stars > 0 && (
-              <span className="label text-soft ml-2">★ {repo.stars}</span>
-            )}
+            {repo.stars > 0 && <span className="label text-soft ml-2">★ {repo.stars}</span>}
             <Arrow />
             {repo.description && (
               <span className="text-soft mt-1 block truncate text-[0.95rem]">
@@ -113,7 +106,9 @@ async function Repos() {
       </ol>
       <p className="label text-soft mt-5 flex flex-wrap items-center justify-between gap-2">
         <span>
-          {source === "live" ? "Live from GitHub, refreshed hourly" : "Saved snapshot from GitHub"}
+          {source === "live"
+            ? "Live from GitHub, refreshed every few minutes"
+            : "Saved snapshot from GitHub"}
         </span>
         <a
           href={`https://github.com/${GITHUB_USER}`}
@@ -129,7 +124,11 @@ async function Repos() {
   );
 }
 
-const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
+const dateFmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 
 async function Posts() {
   const { posts } = await getLatestPosts(3);
@@ -185,9 +184,7 @@ function Toolbox() {
       <ul>
         {profile.skills.map((g) => (
           <Row key={g.group} meta={g.group}>
-            <span className="text-fg/85 text-[0.95rem] leading-relaxed">
-              {g.items.join(" · ")}
-            </span>
+            <span className="text-fg/85 text-[0.95rem] leading-relaxed">{g.items.join(" · ")}</span>
           </Row>
         ))}
       </ul>
